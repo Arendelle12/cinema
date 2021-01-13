@@ -9,7 +9,7 @@ def create_tables():
         CREATE TABLE movies (
             title VARCHAR(30),
             year_of_production SMALLINT,
-            lenght SMALLINT NOT NULL,
+            movie_length SMALLINT NOT NULL,
             PRIMARY KEY (title, year_of_production)
         )
         """,
