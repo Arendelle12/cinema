@@ -61,7 +61,7 @@ def create_tables():
             ticket_id NUMERIC(3) PRIMARY KEY,
             type_of_ticket VARCHAR(10) NOT NULL DEFAULT 'regular',
             price NUMERIC(6, 2) NOT NULL CONSTRAINT chk_price CHECK(price > 0),
-            percent_discount NUMERIC(3) NOT NULL CONSTRAINT chk_percent_discount CHECK(percent_discount BETWEEN 0 AND 100),
+            percent_discount NUMERIC(3) CONSTRAINT chk_percent_discount CHECK(percent_discount BETWEEN 0 AND 100),
             number_of_seat NUMERIC(2) NOT NULL CONSTRAINT chk_seat CHECK(number_of_seat > 0),
             order_id NUMERIC(3) NOT NULL,
             discount_id NUMERIC(3),
