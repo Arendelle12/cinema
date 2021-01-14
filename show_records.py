@@ -5,13 +5,13 @@ from config import config
 class ShowRecords:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.geometry("500x300+200+200")
+        self.root.geometry("490x300+200+200")
         self.root.title('Records')
-        self.titleLabel = tk.Label(self.root, text="Title", width=20)
+        self.titleLabel = tk.Label(self.root, text="Title", width=20, bg="#66ccff")
         self.titleLabel.grid(row=0, column=0)
-        self.yearLabel = tk.Label(self.root, text="Year", width=20)
+        self.yearLabel = tk.Label(self.root, text="Year", width=20, bg="#66ccff")
         self.yearLabel.grid(row=0, column=1)
-        self.lengthLabel = tk.Label(self.root, text="Length", width=20)
+        self.lengthLabel = tk.Label(self.root, text="Length", width=20, bg="#66ccff")
         self.lengthLabel.grid(row=0, column=2)
         self.show_records()
         self.root.mainloop()
@@ -19,9 +19,9 @@ class ShowRecords:
     def show_records(self):
         data = self.read_from_movies()
         for index, record in enumerate(data):
-            tk.Label(self.root, text=record[0]).grid(row=index+1, column=0)
-            tk.Label(self.root, text=record[1]).grid(row=index+1, column=1)
-            tk.Label(self.root, text=record[2]).grid(row=index+1, column=2)
+            tk.Label(self.root, text=record[0]).grid(row=index+1, column=0, pady=3)
+            tk.Label(self.root, text=record[1]).grid(row=index+1, column=1, pady=3)
+            tk.Label(self.root, text=record[2]).grid(row=index+1, column=2, pady=3)
 
     def read_from_movies(self):
         sql = """SELECT * FROM movies;"""
