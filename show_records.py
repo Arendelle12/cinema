@@ -24,7 +24,7 @@ class ShowRecords:
             tk.Label(self.root, text=record[2]).grid(row=index+1, column=2, pady=3)
 
     def read_from_movies(self):
-        sql = """SELECT * FROM movies;"""
+        sql = """SELECT * FROM movies ORDER BY title, year_of_production;"""
         conn = None
         try:
             # read database configuration
