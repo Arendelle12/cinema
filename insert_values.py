@@ -192,4 +192,52 @@ if __name__ == '__main__':
     # insert_movie('Jojo Rabbit', 2019, 108)
     # insert_movie('Inception', 2010, 148)
     # insert_movie('Titanic', 1997, 194)
-    insert_movie('Marriage Story', 2019, 136)
+    # insert_movie('Marriage Story', 2019, 136)
+
+    # insert_discount('family', 30)
+
+    # insert_hall(50, 50)
+    # insert_hall(40, 40)
+    # insert_hall(35, 35)
+
+    # insert_screening('15:00', '2020-01-14', 1, 'Frozen', 2013)
+    # insert_screening('15:00', '2020-01-15', 2, 'Frozen', 2013)
+    # insert_screening('10:00', '2020-01-15', 2, 'Frozen', 2013)
+    # insert_screening('12:30', '2020-01-15', 3, 'Frozen', 2013)
+    # insert_screening('11:00', '2020-01-16', 3, 'Frozen', 2013)
+
+    # insert_screening('20:00', '2020-01-14', 2, 'Knives Out', 2019)
+    # insert_screening('20:00', '2020-01-15', 3, 'Knives Out', 2019)
+    # insert_screening('20:00', '2020-01-16', 2, 'Knives Out', 2019)
+
+    # insert_screening('17:00', '2020-01-14', 4, 'Intouchables', 2011)
+    # insert_screening('17:00', '2020-01-16', 4, 'Intouchables', 2011)
+
+    # insert_screening('18:00', '2020-01-14', 1, 'The Avengers', 2012)
+    # insert_screening('18:00', '2020-01-15', 1, 'The Avengers', 2012)
+    # insert_screening('17:00', '2020-01-15', 2, 'The Avengers', 2012)
+    # insert_screening('20:00', '2020-01-17', 2, 'The Avengers', 2012)
+    # insert_screening('19:00', '2020-01-16', 3, 'The Avengers', 2012)
+
+    # insert_screening('20:00', '2020-01-14', 3, 'Joker', 2019)
+    # insert_screening('15:00', '2020-01-15', 3, 'Joker', 2019)
+    # insert_screening('20:00', '2020-01-17', 3, 'Joker', 2019)
+
+    # insert_screening('10:00', '2020-01-15', 4, 'Soul', 2020)
+    # insert_screening('14:00', '2020-01-15', 4, 'Soul', 2020)
+
+    # insert_screening('16:00', '2020-01-16', 2, 'Jojo Rabbit', 2019)
+    # insert_screening('13:00', '2020-01-16', 2, 'Jojo Rabbit', 2019)
+    # insert_screening('16:00', '2020-01-14', 2, 'Jojo Rabbit', 2019)
+    # insert_screening('13:00', '2020-01-17', 2, 'Jojo Rabbit', 2019)
+
+    # insert_screening('20:00', '2020-01-14', 4, 'Inception', 2010)
+
+    # insert_screening('18:00', '2020-01-15', 4, 'Titanic', 1997)
+    # insert_screening('13:00', '2020-01-14', 4, 'Titanic', 1997)
+
+    # insert_screening('11:00', '2020-01-16', 1, 'Marriage Story', 2019)
+    # insert_screening('14:00', '2020-01-16', 1, 'Marriage Story', 2019)
+    # insert_screening('17:00', '2020-01-16', 1, 'Marriage Story', 2019)
+    insert_screening('20:00', '2020-01-16', 1, 'Marriage Story', 2019)
+    
