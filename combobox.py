@@ -1,4 +1,100 @@
 
+import  tkinter as tk
+from tkinter import ttk
+import psycopg2
+from config import config
+
+class ShowScreenings:
+    def __init__(self):
+        self.app = tk.Tk() 
+        self.app.geometry('600x250')
+        self.master_frame = tk.Frame(self.app, relief=tk.RIDGE)
+        self.master_frame.grid(row=0, column=0)
+        self.show()
+        self.app.mainloop()
+
+    def read_from_table(self, sql, data = None):
+        #sql = """SELECT * FROM movies ORDER BY title, year_of_production;"""
+        conn = None
+        try:
+            # read database configuration
+            params = config()
+            # connect to the PostgreSQL database
+            conn = psycopg2.connect(**params)
+            # create a new cursor
+            cur = conn.cursor()
+            # execute the INSERT statement
+            cur.execute(sql, data)
+            #return value
+            data = cur.fetchall()
+            # commit the changes to the database
+            conn.commit()
+            # close communication with the database
+            cur.close()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
+        return data
+
+    def callbackFunc(self, event):
+        movie = self.comboExample.get()
+
+        title = (movie, )
+        sql = """SELECT title, screening_date, screening_time FROM screenings WHERE title = (%s) ORDER BY screening_date, screening_time;"""
+        records = self.read_from_table(sql, title)
+
+        read_titles = []
+        read_dates = []
+        read_times = []
+        
+        for r in records:
+            read_titles.append(r[0])
+            read_dates.append(r[1])
+            read_times.append("{:d}:{:02d}".format(r[2].hour, r[2].minute))
+         
+        rows = self.read_from_table("""SELECT COUNT(*) FROM screenings WHERE title = (%s);""", title)[0][0]
+        cols = 3
+
+        for widget in self.bottom_frame.winfo_children():
+            widget.destroy()
+
+        for j in range(cols):
+            for i in range(rows):
+                if(j == 0):
+                    label = tk.Label(master=self.bottom_frame, text=read_titles[i], width=20)
+                if(j == 1):
+                    label = tk.Label(master=self.bottom_frame, text=read_dates[i], width=20)
+                if(j == 2):
+                    label = tk.Label(master=self.bottom_frame, text=read_times[i], width=20)
+
+                label.grid(row=i, column=j, padx=5, pady=5, sticky="N")
+
+    def show(self):
+        top_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
+        top_frame.grid(row=0, column=0)
+
+        self.bottom_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
+        self.bottom_frame.grid(row=1, column=0, sticky="N")
+        
+        data = self.read_from_table("""SELECT title FROM screenings GROUP BY title ORDER BY title;""")
+        titles=[]
+        for i in data:
+            titles.append(i[0])
+        labelTop = tk.Label(top_frame, text = "Choose movie")
+        labelTop.grid(row=0, column=0)
+
+        self.comboExample = ttk.Combobox(top_frame, values=titles)
+        self.comboExample.grid(row=1, column=0, padx=200)
+        self.comboExample.current()
+
+        self.comboExample.bind("<<ComboboxSelected>>", self.callbackFunc)
+
+if __name__ == '__main__':
+    app = ShowScreenings()
+
+
 # import tkinter as tk 
 # from tkinter import ttk 
   
@@ -105,15 +201,7 @@
 # if __name__ == "__main__":
 #     app = Combo()
 
-
-        
-
-        
-     
-        
-
-
-
+#############################################
 
 # from tkinter import *
 
@@ -154,105 +242,3 @@
    
 
 #    root.mainloop()
-
-import  tkinter as tk
-from tkinter import ttk
-import psycopg2
-from config import config
-
-class ShowScreenings:
-    def __init__(self):
-        self.app = tk.Tk() 
-        self.app.geometry('600x250')
-        self.master_frame = tk.Frame(self.app, relief=tk.RIDGE)
-        self.master_frame.grid(row=0, column=0)
-        self.show()
-        self.app.mainloop()
-
-    def read_from_table(self, sql, data = None):
-        #sql = """SELECT * FROM movies ORDER BY title, year_of_production;"""
-        conn = None
-        try:
-            # read database configuration
-            params = config()
-            # connect to the PostgreSQL database
-            conn = psycopg2.connect(**params)
-            # create a new cursor
-            cur = conn.cursor()
-            # execute the INSERT statement
-            cur.execute(sql, data)
-            #return value
-            data = cur.fetchall()
-            # commit the changes to the database
-            conn.commit()
-            # close communication with the database
-            cur.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-        finally:
-            if conn is not None:
-                conn.close()
-        return data
-
-    def callbackFunc(self, event):
-        
-
-        movie = self.comboExample.get()
-        print("New Element Selected: ", movie, "Type of el: ", type(movie))    
-        if(movie == 'Frozen'):
-            print("Match!")
-
-        
-        title = (movie, )
-        sql = """SELECT title, screening_date, screening_time FROM screenings WHERE title = (%s) ORDER BY screening_date, screening_time;"""
-        records = self.read_from_table(sql, title)
-
-        read_titles = []
-        read_dates = []
-        read_times = []
-        
-        for r in records:
-            read_titles.append(r[0])
-            read_dates.append(r[1])
-            read_times.append("{:d}:{:02d}".format(r[2].hour, r[2].minute))
-         
-        rows = self.read_from_table("""SELECT COUNT(*) FROM screenings WHERE title = (%s);""", title)[0][0]
-        cols = 3
-
-        for widget in self.bottom_frame.winfo_children():
-            widget.destroy()
-
-        for j in range(cols):
-            for i in range(rows):
-                if(j == 0):
-                    label = tk.Label(master=self.bottom_frame, text=read_titles[i], width=20)
-                if(j == 1):
-                    label = tk.Label(master=self.bottom_frame, text=read_dates[i], width=20)
-                if(j == 2):
-                    label = tk.Label(master=self.bottom_frame, text=read_times[i], width=20)
-
-                label.grid(row=i, column=j, padx=5, pady=5, sticky="N")
-
-    def show(self):
-        top_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
-        top_frame.grid(row=0, column=0)
-
-        self.bottom_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
-        self.bottom_frame.grid(row=1, column=0, sticky="N")
-
-
-        data = self.read_from_table("""SELECT title FROM screenings GROUP BY title ORDER BY title;""")
-        titles=[]
-        for i in data:
-            titles.append(i[0])
-        labelTop = tk.Label(top_frame, text = "Choose movie")
-        labelTop.grid(row=0, column=0)
-
-        self.comboExample = ttk.Combobox(top_frame, values=titles)
-        self.comboExample.grid(row=1, column=0, padx=200)
-        self.comboExample.current()
-
-        self.comboExample.bind("<<ComboboxSelected>>", self.callbackFunc)
-
-if __name__ == '__main__':
-    app = ShowScreenings()
