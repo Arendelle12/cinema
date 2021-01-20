@@ -151,10 +151,10 @@ def insert_order(customer_id):
         if conn is not None:
             conn.close()
 
-def insert_ticket(price, percent_discount, number_of_seat, order_id, discount_id, screening_id):
+def insert_ticket(price, percent_discount, number_of_seat, order_id, discount_id, screening_id, type_of_ticket = 'regular'):
     """ insert values into tables """
-    sql = """INSERT INTO tickets(ticket_id, price, percent_discount, number_of_seat, order_id, discount_id, screening_id)
-             VALUES(nextval('ticket_id_seq'),%s,%s,%s,%s,%s,%s);"""
+    sql = """INSERT INTO tickets(ticket_id, type_of_ticket, price, percent_discount, number_of_seat, order_id, discount_id, screening_id)
+             VALUES(nextval('ticket_id_seq'),%s,%s,%s,%s,%s,%s,%s);"""
     conn = None
     try:
         # read database configuration
@@ -164,7 +164,7 @@ def insert_ticket(price, percent_discount, number_of_seat, order_id, discount_id
         # create a new cursor
         cur = conn.cursor()
         # execute the INSERT statement
-        cur.execute(sql, (price, percent_discount, number_of_seat, order_id, discount_id, screening_id))
+        cur.execute(sql, (type_of_ticket, price, percent_discount, number_of_seat, order_id, discount_id, screening_id))
         # commit the changes to the database
         conn.commit()
         # close communication with the database
@@ -239,5 +239,26 @@ if __name__ == '__main__':
     # insert_screening('11:00', '2020-01-16', 1, 'Marriage Story', 2019)
     # insert_screening('14:00', '2020-01-16', 1, 'Marriage Story', 2019)
     # insert_screening('17:00', '2020-01-16', 1, 'Marriage Story', 2019)
-    insert_screening('20:00', '2020-01-16', 1, 'Marriage Story', 2019)
+    # insert_screening('20:00', '2020-01-16', 1, 'Marriage Story', 2019)
     
+    # insert_order(2)
+    # insert_order(4)
+    # insert_order(4)
+
+    # insert_ticket(30, None, 15, 1, None, 1)
+    # insert_ticket(30, None, 13, 2, None, 2)
+    # insert_ticket(30, None, 10, 2, None, 2)
+    # insert_ticket(30, None, 11, 3, None, 4)
+    # insert_ticket(30, None, 12, 3, None, 4)
+    # insert_ticket(30, None, 16, 4, None, 6)
+    # insert_ticket(30, None, 17, 4, None, 6)
+
+    # insert_ticket(15, None, 1, 4, None, 6, 'student')
+    # insert_ticket(15, None, 2, 4, None, 6, 'student')
+    # insert_ticket(15, None, 3, 4, None, 6, 'student')
+
+    # insert_order(5)
+
+    insert_ticket(30, None, 1, 5, None, 8)
+    insert_ticket(15, None, 2, 5, None, 8, 'student')
+    insert_ticket(15, None, 3, 5, None, 8, 'student')
