@@ -35,6 +35,15 @@ class ShowOrders:
                 conn.close()
         return data
 
+    def movies(self):
+        pass
+
+    def delete(self):
+        pass
+
+    def log_out(self):
+        pass
+
     def show(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)
         master_frame.grid(row=0, column=0)
@@ -42,19 +51,19 @@ class ShowOrders:
         top_frame = tk.Frame(master_frame, relief=tk.RIDGE)
         top_frame.grid(row=0, column=0)
 
-        checkLabel = tk.Label(top_frame, text="Check", width=11, bg="#66ccff")
+        checkLabel = tk.Label(top_frame, text="Check", width=11, bg="#66ccff", fg="#00334d")
         checkLabel.grid(row=0, column=0)
-        titleLabel = tk.Label(top_frame, text="Title", width=20, bg="#66ccff")
+        titleLabel = tk.Label(top_frame, text="Title", width=20, bg="#66ccff", fg="#00334d")
         titleLabel.grid(row=0, column=1)
-        typeLabel = tk.Label(top_frame, text="Type of ticket", width=20, bg="#66ccff")
+        typeLabel = tk.Label(top_frame, text="Type of ticket", width=20, bg="#66ccff", fg="#00334d")
         typeLabel.grid(row=0, column=2)
-        numberLabel = tk.Label(top_frame, text="Number of tickets", width=20, bg="#66ccff")
+        numberLabel = tk.Label(top_frame, text="Number of tickets", width=20, bg="#66ccff", fg="#00334d")
         numberLabel.grid(row=0, column=3)
-        priceLabel = tk.Label(top_frame, text="Price", width=20, bg="#66ccff")
+        priceLabel = tk.Label(top_frame, text="Price", width=20, bg="#66ccff", fg="#00334d")
         priceLabel.grid(row=0, column=4)
-        dateLabel = tk.Label(top_frame, text="Date", width=20, bg="#66ccff")
+        dateLabel = tk.Label(top_frame, text="Date", width=20, bg="#66ccff", fg="#00334d")
         dateLabel.grid(row=0, column=5)
-        timeLabel = tk.Label(top_frame, text="Time", width=20, bg="#66ccff")
+        timeLabel = tk.Label(top_frame, text="Time", width=20, bg="#66ccff", fg="#00334d")
         timeLabel.grid(row=0, column=6)
 
         customer_id = 2
@@ -78,5 +87,19 @@ class ShowOrders:
         bottom_frame = tk.Frame(master_frame, relief=tk.RIDGE)
         bottom_frame.grid(row=1, column=0)
 
+
+        # tlo bez myszki - bg="#dddddd"
+        # tlo z myszka - activebackground="#dddddd"
+        # kolor napisu - fg="#dddddd"
+        moviesButton = tk.Button(bottom_frame, text="Show movies", bg="#ffff4d", activebackground="#ffa31a", command=self.movies)
+        moviesButton.grid(row=0, column=0, padx=50)
+
+        deleteButton = tk.Button(bottom_frame, text="Delete order", bg="#dd3c3c", activebackground="#ff0000", command=self.delete)
+        deleteButton.grid(row=0, column=1, padx=50)
+
+        logoutButton = tk.Button(bottom_frame, text="Log out", bg="#9999ff", activebackground="#d24dff", command=self.log_out)
+        logoutButton.grid(row=0, column=2, padx=50)
+
 if __name__ == '__main__':
     app = ShowOrders()
+
