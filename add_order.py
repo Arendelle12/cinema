@@ -39,15 +39,16 @@ class AddOrder:
 
         return data
 
-    def getValue(self):
+    def get_value(self):
         rN = self.regularNumber.get()
         sN = self.studentNumber.get()
         fN = self.familyNumber.get()
         print(rN, sN, fN)
 
+    def show(self):
         self.root.destroy()
+        ##### CHANGE IMPORT CLASS #####
         sr_temp = ShowRecords()
-        
 
     def add(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)
@@ -105,8 +106,11 @@ class AddOrder:
         self.familyNumber = tk.Spinbox(middle_frame, from_=4, to=10, width=3)
         self.familyNumber.grid(row=3, column=2)
 
-        addButton = tk.Button(bottom_frame, text="Add", bg="#33ff33", activebackground="#00e600", command=self.getValue)
+        addButton = tk.Button(bottom_frame, text="Add", bg="#33ff33", activebackground="#00e600", command=self.get_value)
         addButton.grid(row=0, column=0, padx=20)
+
+        ordersButton = tk.Button(bottom_frame, text="Show orders", bg="#33ff33", activebackground="#00e600", command=self.show)
+        ordersButton.grid(row=0, column=1, padx=20)
 
 if __name__ == "__main__":
     app = AddOrder(2)  
