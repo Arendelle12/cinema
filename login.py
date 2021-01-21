@@ -92,13 +92,13 @@ class InputWindow:
 
         self.box.create_window(200, 280, window = self.entry4)
 
-        button1 = tk.Button(text="Add user", command = self.add_user, bg = 'blue', fg = 'white')
+        button1 = tk.Button(text="Add user", command = self.add_user, bg = '#c299ff', activebackground='#b380ff', fg='#3d0099')
         self.box.create_window(100, 320, window = button1)
 
-        button2 = tk.Button(text="Log In", command = self.log_in, bg = 'blue', fg = 'white')
+        button2 = tk.Button(text="Log In", command = self.log_in, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
         self.box.create_window(200, 320, window = button2)
 
-        button3 = tk.Button(text="Update user", command = self.update_user, bg = 'blue', fg = 'white')
+        button3 = tk.Button(text="Update user", command = self.update_user, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
         self.box.create_window(300, 320, window = button3)
 
         label5 = tk.Label(self.root, textvariable = self.validationError)
