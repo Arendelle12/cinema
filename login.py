@@ -17,7 +17,7 @@ class InputWindow:
         self.validationError = tk.StringVar()
         self.window()
 
-    def get_input(self):
+    def add_user(self):
         self.validationError.set('')
         name_pattern = re.compile("^[A-Z][a-z]+$")
         email_pattern = re.compile("^[A-Za-z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
@@ -42,26 +42,6 @@ class InputWindow:
         elif phone_number is not None and not bool(phone_pattern.match(phone_number)):
             self.validationError.set("Phone number must contain 9 digits")
         else:
-        # if len(first_name) == 0:
-        #     print("Fn is none")
-        #     self.validationError.set('First name cannot be empty')
-        # elif not bool(name_pattern.match(first_name)):
-        #     self.validationError.set('First name must start with capital letter followed by lowercase letters')
-        # elif len(last_name) == 0:
-        #     self.validationError.set('Last name cannot be empty')
-        # elif not bool(name_pattern.match(last_name)):
-        #     self.validationError.set('Last name must start with capital letter followed by lowercase letters')
-        # else:
-        #     if len(email) == 0:
-        #         email = None
-        #     if len(phone_number) == 0:
-        #         phone_number = None
-        #     else
-
-            # return first_name, last_name, email, phone_number
-            # def insert_customer(first_name, last_name, email, phone_number):
-    # """ insert values into tables """
-
             sql = """INSERT INTO customers
                     VALUES(nextval('customer_id_seq'),%s,%s,%s,%s);"""
             conn = None
@@ -83,6 +63,12 @@ class InputWindow:
             finally:
                 if conn is not None:
                     conn.close()
+
+    def log_in(self):
+        print("Logowanie")
+
+    def update_user(self):
+        print("Aktualizacja")
         
 
     def window(self):
@@ -106,8 +92,14 @@ class InputWindow:
 
         self.box.create_window(200, 280, window = self.entry4)
 
-        button1 = tk.Button(text="OK", command = self.get_input, bg = 'blue', fg = 'white')
-        self.box.create_window(200, 320, window = button1)
+        button1 = tk.Button(text="Add user", command = self.add_user, bg = 'blue', fg = 'white')
+        self.box.create_window(100, 320, window = button1)
+
+        button2 = tk.Button(text="Log In", command = self.log_in, bg = 'blue', fg = 'white')
+        self.box.create_window(200, 320, window = button2)
+
+        button3 = tk.Button(text="Update user", command = self.update_user, bg = 'blue', fg = 'white')
+        self.box.create_window(300, 320, window = button3)
 
         label5 = tk.Label(self.root, textvariable = self.validationError)
         self.box.create_window(200, 360, window = label5)
