@@ -7,14 +7,15 @@ ROWS, COLS = 10, 3  # Size of grid.
 ROWS_DISP = 8  # Number of rows to display.
 COLS_DISP = 3  # Number of columns to display.
 
-class MyApp(tk.Tk):
-    def __init__(self, title="Sample App", *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
+class ShowMovies:
+    def __init__(self):
+        self.root = tk.Tk()
 
-        self.title(title)
-        self.configure(background="Gray") 
+        self.root.title("Movies")
+        self.root.configure(background="Gray") 
         self.number()
         self.show_records()
+        self.root.mainloop()
         
 
     def number(self):
@@ -50,7 +51,7 @@ class MyApp(tk.Tk):
         
 
     def show_records(self):
-        master_frame = tk.Frame(self, relief=tk.RIDGE)
+        master_frame = tk.Frame(self.root, relief=tk.RIDGE)
         master_frame.grid(row=0, column=0)
 
         top_frame = tk.Frame(master_frame, bg=BG, relief=tk.RIDGE)
@@ -125,5 +126,5 @@ class MyApp(tk.Tk):
 
 
 if __name__ == "__main__":
-    app = MyApp("Movies")
-    app.mainloop()
+    app = ShowMovies()
+    

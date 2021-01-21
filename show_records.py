@@ -48,4 +48,5 @@ class ShowRecords:
                 conn.close()
         return self.data
 
-show = ShowRecords()
+if __name__ == "__main__":
+    show = ShowRecords()

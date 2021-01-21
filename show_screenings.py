@@ -6,11 +6,12 @@ from config import config
 
 class ShowScreenings:
     def __init__(self):
-        self.app = tk.Tk() 
-        self.app.geometry('600x300')
+        self.root = tk.Tk() 
+        self.root.geometry('600x300')
+        self.root.title("Screenings") 
         self.screening_id = 0
         self.show()
-        self.app.mainloop()
+        self.root.mainloop()
 
     def read_from_table(self, sql, data = None):
         #sql = """SELECT * FROM movies ORDER BY title, year_of_production;"""
@@ -38,6 +39,7 @@ class ShowScreenings:
         return data
 
     def callbackFunc(self, event):
+        self.read_id = []
         self.read_titles = []
         self.read_dates = []
         self.read_times = []
@@ -46,13 +48,16 @@ class ShowScreenings:
         movie = self.comboExample.get()
 
         title = (movie, )
-        sql = """SELECT title, screening_date, screening_time FROM screenings WHERE title = (%s) ORDER BY screening_date, screening_time;"""
+        sql = """SELECT screening_id, title, screening_date, screening_time FROM screenings WHERE title = (%s) ORDER BY screening_date, screening_time;"""
         records = self.read_from_table(sql, title)
 
         for r in records:
-            self.read_titles.append(r[0])
-            self.read_dates.append(r[1])
-            self.read_times.append("{:d}:{:02d}".format(r[2].hour, r[2].minute))
+            self.read_id.append(r[0])
+            self.read_titles.append(r[1])
+            self.read_dates.append(r[2])
+            self.read_times.append(r[3])
+
+            
          
         rows = self.read_from_table("""SELECT COUNT(*) FROM screenings WHERE title = (%s);""", title)[0][0]
         cols = 3
@@ -78,7 +83,8 @@ class ShowScreenings:
                 if(j == 1):
                     label = tk.Label(master=self.middle_frame, text=self.read_dates[i], width=20)
                 if(j == 2):
-                    label = tk.Label(master=self.middle_frame, text=self.read_times[i], width=20)
+                    scr_time = "{:d}:{:02d}".format(self.read_times[i].hour, self.read_times[i].minute)
+                    label = tk.Label(master=self.middle_frame, text=scr_time, width=20)
 
                 label.grid(row=i, column=j+1, padx=5, pady=5, sticky="N")
 
@@ -86,11 +92,11 @@ class ShowScreenings:
 
     def getValue(self):
         idx = self.var.get()
-        print(idx, ": ", self.read_titles[idx], self.read_dates[idx], self.read_times[idx])
+        print(idx, ": ", self.read_id[idx])
 
 
     def show(self):
-        self.master_frame = tk.Frame(self.app, relief=tk.RIDGE)
+        self.master_frame = tk.Frame(self.root, relief=tk.RIDGE)
         self.master_frame.grid(row=0, column=0)
 
         top_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
@@ -119,7 +125,7 @@ class ShowScreenings:
         okButton.grid(row=0, column=0)
 
 if __name__ == '__main__':
-    app = ShowScreenings()
+    root = ShowScreenings()
 
 
 # import tkinter as tk 
@@ -161,14 +167,14 @@ if __name__ == '__main__':
 # import tkinter as tk
 # from tkinter import ttk
  
-# app = tk.Tk() 
-# app.geometry('200x100')
+# root = tk.Tk() 
+# root.geometry('200x100')
 
-# labelTop = tk.Label(app,
+# labelTop = tk.Label(root,
 #                     text = "Choose your favourite month")
 # labelTop.grid(column=0, row=0)
 
-# comboExample = ttk.Combobox(app, 
+# comboExample = ttk.Combobox(root, 
 #                             values=[
 #                                     "January", 
 #                                     "February",
@@ -180,7 +186,7 @@ if __name__ == '__main__':
 
 # print(comboExample.current(), comboExample.get())
 
-# app.mainloop()
+# root.mainloop()
 
 ###################################################################
 
@@ -190,10 +196,10 @@ if __name__ == '__main__':
 
 # class Combo:
 #     def __init__(self):
-#         self.app = tk.Tk() 
-#         self.app.geometry('200x100')
+#         self.root = tk.Tk() 
+#         self.root.geometry('200x100')
 #         self.show()
-#         self.app.mainloop()
+#         self.root.mainloop()
 
 #     # def callbackFunc(self, event):
 #     #         print("New Element Selected: ", self.comboExample.get())
@@ -206,11 +212,11 @@ if __name__ == '__main__':
 #         print(a)
 
 #     def show(self):
-#         labelTop = tk.Label(self.app,
+#         labelTop = tk.Label(self.root,
 #                             text = "Choose your favourite month")
 #         labelTop.grid(column=0, row=0)
 
-#         self.comboExample = ttk.Combobox(self.app, 
+#         self.comboExample = ttk.Combobox(self.root, 
 #                                     values=[
 #                                             "January AAAA", 
 #                                             "February BBB",
@@ -220,13 +226,13 @@ if __name__ == '__main__':
 
 #         self.comboExample.grid(column=0, row=1)
 #         self.comboExample.current(1)
-#         button1 = tk.Button(self.app, text="Get value", command=self.cmd, activebackground='Lime')
+#         button1 = tk.Button(self.root, text="Get value", command=self.cmd, activebackground='Lime')
 #         button1.grid(row=2, column=0)
 #         #self.get_name()
 #         #print(self.comboExample.get())
 
 # if __name__ == "__main__":
-#     app = Combo()
+#     root = Combo()
 
 #############################################
 
