@@ -7,9 +7,8 @@ from config import config
 class ShowScreenings:
     def __init__(self):
         self.app = tk.Tk() 
-        self.app.geometry('600x250')
-        self.master_frame = tk.Frame(self.app, relief=tk.RIDGE)
-        self.master_frame.grid(row=0, column=0)
+        self.app.geometry('600x300')
+        self.screening_id = 0
         self.show()
         self.app.mainloop()
 
@@ -39,44 +38,69 @@ class ShowScreenings:
         return data
 
     def callbackFunc(self, event):
+        self.read_titles = []
+        self.read_dates = []
+        self.read_times = []
+        self.radiobutton_vars = []
+
         movie = self.comboExample.get()
 
         title = (movie, )
         sql = """SELECT title, screening_date, screening_time FROM screenings WHERE title = (%s) ORDER BY screening_date, screening_time;"""
         records = self.read_from_table(sql, title)
 
-        read_titles = []
-        read_dates = []
-        read_times = []
-        
         for r in records:
-            read_titles.append(r[0])
-            read_dates.append(r[1])
-            read_times.append("{:d}:{:02d}".format(r[2].hour, r[2].minute))
+            self.read_titles.append(r[0])
+            self.read_dates.append(r[1])
+            self.read_times.append("{:d}:{:02d}".format(r[2].hour, r[2].minute))
          
         rows = self.read_from_table("""SELECT COUNT(*) FROM screenings WHERE title = (%s);""", title)[0][0]
         cols = 3
 
-        for widget in self.bottom_frame.winfo_children():
+        for widget in self.middle_frame.winfo_children():
             widget.destroy()
+
+        
+        self.var = tk.IntVar()
+        self.var.set(0)
+        # self.radiobutton_vars.append(var)
+
+        for i in range(rows):
+            #var = tk.IntVar()
+            radiobutton = tk.Radiobutton(master=self.middle_frame, variable=self.var, value=i)
+            radiobutton.grid(row=i, column=0)
+            #self.radiobutton_vars.append(var)
 
         for j in range(cols):
             for i in range(rows):
                 if(j == 0):
-                    label = tk.Label(master=self.bottom_frame, text=read_titles[i], width=20)
+                    label = tk.Label(master=self.middle_frame, text=self.read_titles[i], width=20)
                 if(j == 1):
-                    label = tk.Label(master=self.bottom_frame, text=read_dates[i], width=20)
+                    label = tk.Label(master=self.middle_frame, text=self.read_dates[i], width=20)
                 if(j == 2):
-                    label = tk.Label(master=self.bottom_frame, text=read_times[i], width=20)
+                    label = tk.Label(master=self.middle_frame, text=self.read_times[i], width=20)
 
-                label.grid(row=i, column=j, padx=5, pady=5, sticky="N")
+                label.grid(row=i, column=j+1, padx=5, pady=5, sticky="N")
+
+        
+
+    def getValue(self):
+        idx = self.var.get()
+        print(idx, ": ", self.read_titles[idx], self.read_dates[idx], self.read_times[idx])
+
 
     def show(self):
+        self.master_frame = tk.Frame(self.app, relief=tk.RIDGE)
+        self.master_frame.grid(row=0, column=0)
+
         top_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
         top_frame.grid(row=0, column=0)
 
-        self.bottom_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
-        self.bottom_frame.grid(row=1, column=0, sticky="N")
+        self.middle_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
+        self.middle_frame.grid(row=1, column=0, sticky="N")
+
+        bottom_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
+        bottom_frame.grid(row=2, column=0)
         
         data = self.read_from_table("""SELECT title FROM screenings GROUP BY title ORDER BY title;""")
         titles=[]
@@ -90,6 +114,9 @@ class ShowScreenings:
         self.comboExample.current()
 
         self.comboExample.bind("<<ComboboxSelected>>", self.callbackFunc)
+
+        okButton = tk.Button(bottom_frame, text="OK", command=self.getValue)
+        okButton.grid(row=0, column=0)
 
 if __name__ == '__main__':
     app = ShowScreenings()

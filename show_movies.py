@@ -125,5 +125,5 @@ class MyApp(tk.Tk):
 
 
 if __name__ == "__main__":
-    app = MyApp("Scrollable Canvas")
+    app = MyApp("Movies")
     app.mainloop()
