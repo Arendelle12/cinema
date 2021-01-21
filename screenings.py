@@ -112,7 +112,7 @@ class ShowScreenings:
         titles=[]
         for i in data:
             titles.append(i[0])
-        labelTop = tk.Label(top_frame, text = "Choose movie")
+        labelTop = tk.Label(top_frame, text = "Choose movie", fg="green")
         labelTop.grid(row=0, column=0)
 
         self.comboExample = ttk.Combobox(top_frame, values=titles)
@@ -121,7 +121,7 @@ class ShowScreenings:
 
         self.comboExample.bind("<<ComboboxSelected>>", self.callbackFunc)
 
-        okButton = tk.Button(bottom_frame, text="OK", command=self.getValue)
+        okButton = tk.Button(bottom_frame, text="OK", command=self.getValue, bg="#4dff4d", activebackground="#00ff00")
         okButton.grid(row=0, column=0)
 
 if __name__ == '__main__':
