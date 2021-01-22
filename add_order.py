@@ -3,6 +3,7 @@ from tkinter import ttk
 import psycopg2
 from config import config
 from show_records import ShowRecords
+from queries import select_one
 
 class AddOrder:
     def __init__(self, screening_id):
@@ -13,31 +14,6 @@ class AddOrder:
 
         self.add()
         self.root.mainloop()
-
-    def read_from_table(self, sql, values = None):
-        conn = None
-        try:
-            # read database configuration
-            params = config()
-            # connect to the PostgreSQL database
-            conn = psycopg2.connect(**params)
-            # create a new cursor
-            cur = conn.cursor()
-            # execute the INSERT statement
-            cur.execute(sql, values)
-            #return value
-            data = cur.fetchone()
-            # commit the changes to the database
-            conn.commit()
-            # close communication with the database
-            cur.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-        finally:
-            if conn is not None:
-                conn.close()
-
-        return data
 
     def get_value(self):
         rN = self.regularNumber.get()
@@ -63,7 +39,7 @@ class AddOrder:
 
         sql = """SELECT title, screening_date, screening_time FROM screenings WHERE screening_id = (%s);"""
         id_value = (self.screening_id, )
-        screening_info = self.read_from_table(sql, id_value)
+        screening_info = select_one(sql, id_value)
         print(screening_info[0], screening_info[1], screening_info[2])
 
 

@@ -1,11 +1,12 @@
 import tkinter as tk
 import psycopg2
 from config import config
+from queries import select_all
 
 BG = "#66b3ff"  # Light blue.
 ROWS, COLS = 10, 3  # Size of grid.
-ROWS_DISP = 8  # Number of rows to display.
-COLS_DISP = 3  # Number of columns to display.
+ROWS_DISP = 8  # get_data of rows to display.
+COLS_DISP = 3  # get_data of columns to display.
 
 class ShowMovies:
     def __init__(self):
@@ -13,41 +14,15 @@ class ShowMovies:
 
         self.root.title("Movies")
         self.root.configure(background="Gray") 
-        self.number()
+        self.get_data()
         self.show_records()
         self.root.mainloop()
         
 
-    def number(self):
-        self.rows = self.read_from_table("""SELECT COUNT(*) FROM movies;""")[0][0]
-        self.cols = self.read_from_table("""SELECT COUNT(*) FROM information_schema.columns WHERE table_name='movies';""")[0][0]
-        self.data = self.read_from_table("""SELECT * FROM movies ORDER BY title, year_of_production;""")
-        #print(self.data)
-
-    def read_from_table(self, sql):
-        #sql = """SELECT * FROM movies ORDER BY title, year_of_production;"""
-        conn = None
-        try:
-            # read database configuration
-            params = config()
-            # connect to the PostgreSQL database
-            conn = psycopg2.connect(**params)
-            # create a new cursor
-            cur = conn.cursor()
-            # execute the INSERT statement
-            cur.execute(sql)
-            #return value
-            self.data = cur.fetchall()
-            # commit the changes to the database
-            conn.commit()
-            # close communication with the database
-            cur.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-        finally:
-            if conn is not None:
-                conn.close()
-        return self.data
+    def get_data(self):
+        self.rows = select_all("""SELECT COUNT(*) FROM movies;""")[0][0]
+        self.cols = select_all("""SELECT COUNT(*) FROM information_schema.columns WHERE table_name='movies';""")[0][0]
+        self.movies = select_all("""SELECT * FROM movies ORDER BY title, year_of_production;""")
 
     def show_screenings(self):
         print("screen")
@@ -89,7 +64,7 @@ class ShowMovies:
 
         for i in range(self.rows):
             for j in range(self.cols):
-                label = tk.Label(master=labels_frame, text=self.data[i][j], width=20)
+                label = tk.Label(master=labels_frame, text=self.movies[i][j], width=20)
                 label.grid(row=i, column=j, padx=5, pady=5)
                 
 
@@ -100,7 +75,7 @@ class ShowMovies:
         bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
 
         # Define the scrollable region as entire canvas with only the desired
-        # number of rows and columns displayed.
+        # get_data of rows and columns displayed.
         w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
         dw, dh = int((w/self.cols) * COLS_DISP), int((h/self.rows) * ROWS_DISP)
         canvas.configure(scrollregion=bbox, width=dw, height=dh)

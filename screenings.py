@@ -1,8 +1,8 @@
-
 import  tkinter as tk
 from tkinter import ttk
 import psycopg2
 from config import config
+from queries import select_all
 
 class ShowScreenings:
     def __init__(self):
@@ -12,31 +12,6 @@ class ShowScreenings:
         self.screening_id = 0
         self.show()
         self.root.mainloop()
-
-    def read_from_table(self, sql, data = None):
-        #sql = """SELECT * FROM movies ORDER BY title, year_of_production;"""
-        conn = None
-        try:
-            # read database configuration
-            params = config()
-            # connect to the PostgreSQL database
-            conn = psycopg2.connect(**params)
-            # create a new cursor
-            cur = conn.cursor()
-            # execute the INSERT statement
-            cur.execute(sql, data)
-            #return value
-            data = cur.fetchall()
-            # commit the changes to the database
-            conn.commit()
-            # close communication with the database
-            cur.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-        finally:
-            if conn is not None:
-                conn.close()
-        return data
 
     def callbackFunc(self, event):
         self.read_id = []
@@ -49,7 +24,7 @@ class ShowScreenings:
 
         title = (movie, )
         sql = """SELECT screening_id, title, screening_date, screening_time FROM screenings WHERE title = (%s) ORDER BY screening_date, screening_time;"""
-        records = self.read_from_table(sql, title)
+        records = select_all(sql, title)
 
         for r in records:
             self.read_id.append(r[0])
@@ -59,7 +34,7 @@ class ShowScreenings:
 
             
          
-        rows = self.read_from_table("""SELECT COUNT(*) FROM screenings WHERE title = (%s);""", title)[0][0]
+        rows = select_all("""SELECT COUNT(*) FROM screenings WHERE title = (%s);""", title)[0][0]
         cols = 3
 
         for widget in self.middle_frame.winfo_children():
@@ -108,7 +83,7 @@ class ShowScreenings:
         bottom_frame = tk.Frame(self.master_frame, relief=tk.RIDGE)
         bottom_frame.grid(row=2, column=0)
         
-        data = self.read_from_table("""SELECT title FROM screenings GROUP BY title ORDER BY title;""")
+        data = select_all("""SELECT title FROM screenings GROUP BY title ORDER BY title;""")
         titles=[]
         for i in data:
             titles.append(i[0])

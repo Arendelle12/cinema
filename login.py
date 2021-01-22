@@ -2,6 +2,7 @@ import tkinter as tk
 import psycopg2
 from config import config
 import re
+from queries import insert_data, update_data
 
 class InputWindow:
     def __init__(self):
@@ -44,32 +45,42 @@ class InputWindow:
         else:
             sql = """INSERT INTO customers
                     VALUES(nextval('customer_id_seq'),%s,%s,%s,%s);"""
-            conn = None
-            try:
-                # read database configuration
-                params = config()
-                # connect to the PostgreSQL database
-                conn = psycopg2.connect(**params)
-                # create a new cursor
-                cur = conn.cursor()
-                # execute the INSERT statement
-                cur.execute(sql, (first_name, last_name, email, phone_number))
-                # commit the changes to the database
-                conn.commit()
-                # close communication with the database
-                cur.close()
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-            finally:
-                if conn is not None:
-                    conn.close()
+            values = (first_name, last_name, email, phone_number)
+            insert_data(sql, values)
 
     def log_in(self):
         print("Logowanie")
 
     def update_user(self):
-        print("Aktualizacja")
-        
+        self.validationError.set('')
+        name_pattern = re.compile("^[A-Z][a-z]+$")
+        email_pattern = re.compile("^[A-Za-z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+        phone_pattern = re.compile("[0-9]{9}")
+
+        first_name = self.entry1.get()
+        last_name = self.entry2.get()
+        email = self.entry3.get()
+        phone_number = self.entry4.get()
+
+        if len(email) == 0:
+            email = None
+        if len(phone_number) == 0:
+            phone_number = None
+
+        if not bool(name_pattern.match(first_name)):
+            self.validationError.set('First name must start with capital letter \n followed by lowercase letters')
+        elif not bool(name_pattern.match(last_name)):
+            self.validationError.set('Last name must start with capital letter \n followed by lowercase letters')
+        elif email is not None and not bool(email_pattern.match(email)):
+            self.validationError.set("E-mail doesn't match pattern")
+        elif phone_number is not None and not bool(phone_pattern.match(phone_number)):
+            self.validationError.set("Phone number must contain 9 digits")
+        else:
+            sql = """UPDATE customers
+            SET email = %s, phone_number = %s
+            WHERE first_name = %s AND last_name = %s;"""
+            values = (email, phone_number, first_name, last_name)
+            update_data(sql, values)
 
     def window(self):
         label1 = tk.Label(self.root, text = 'FIRST NAME *', fg="red")

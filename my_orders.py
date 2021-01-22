@@ -1,6 +1,7 @@
 import tkinter as tk
 import psycopg2
 from config import config
+from queries import select_all
 
 class ShowOrders:
     def __init__(self):
@@ -10,31 +11,6 @@ class ShowOrders:
         self.show()
         self.root.mainloop()
         
-
-    def read_from_table(self, sql, values):
-        conn = None
-        try:
-            # read database configuration
-            params = config()
-            # connect to the PostgreSQL database
-            conn = psycopg2.connect(**params)
-            # create a new cursor
-            cur = conn.cursor()
-            # execute the INSERT statement
-            cur.execute(sql, values)
-            #return value
-            data = cur.fetchall()
-            # commit the changes to the database
-            conn.commit()
-            # close communication with the database
-            cur.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-        finally:
-            if conn is not None:
-                conn.close()
-        return data
-
     def movies(self):
         pass
 
@@ -66,7 +42,7 @@ class ShowOrders:
         timeLabel = tk.Label(top_frame, text="Time", width=20, bg="#66ccff", fg="#00334d")
         timeLabel.grid(row=0, column=6)
 
-        customer_id = 2
+        customer_id = 4
 
         values = (customer_id, )
         sql = """SELECT s.title, type_of_ticket, COUNT(type_of_ticket), SUM(price), s.screening_date, s.screening_time 
@@ -75,7 +51,7 @@ class ShowOrders:
                 GROUP BY t.order_id, s.screening_date, s.screening_time, s.title, type_of_ticket
                 ORDER BY s.title, s.screening_date, s.screening_time;"""
 
-        records = self.read_from_table(sql, values)
+        records = select_all(sql, values)
 
         for index, record in enumerate(records):
             tk.Checkbutton(top_frame).grid(row=index+1, column=0, pady=3)
@@ -87,10 +63,6 @@ class ShowOrders:
         bottom_frame = tk.Frame(master_frame, relief=tk.RIDGE)
         bottom_frame.grid(row=1, column=0)
 
-
-        # tlo bez myszki - bg="#dddddd"
-        # tlo z myszka - activebackground="#dddddd"
-        # kolor napisu - fg="#dddddd"
         moviesButton = tk.Button(bottom_frame, text="Show movies", bg="#ffff4d", activebackground="#ffa31a", command=self.movies)
         moviesButton.grid(row=0, column=0, padx=50)
 
