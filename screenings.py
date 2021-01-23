@@ -66,7 +66,7 @@ class ShowScreenings:
         idx = self.var.get()
         # print(idx, ": ", self.read_id[idx])
         self.root.destroy()
-        add_order.AddOrder(self.read_id[idx])
+        add_order.AddOrder(self.customer_id, self.read_id[idx])
 
 
     def show(self):

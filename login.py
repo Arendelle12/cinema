@@ -142,10 +142,6 @@ class InputWindow:
         self.entry4 = tk.Entry(middle_frame)
         self.entry4.grid(row=7, column=0, pady=5)
 
-        
-        # napis na przycisku - fg=
-        # tlo bez myszki - bg=
-        # tlo z myszka - activebackground=
         add_button = tk.Button(bottom_frame, text="Add user", command = self.add_user, bg = '#47d147', activebackground='#29a329')
         add_button.grid(row=0, column=0, padx=20, pady=10)
 

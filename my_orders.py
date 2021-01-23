@@ -9,10 +9,10 @@ BG = "#66ccff"
 FG = "#00334d"
 
 class ShowOrders:
-    def __init__(self):
+    def __init__(self, customer_id):
         self.root = tk.Tk()
         self.root.title('My orders')
-
+        self.customer_id = customer_id
         self.show()
         self.root.mainloop()
         
