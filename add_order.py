@@ -5,6 +5,8 @@ from config import config
 from show_records import ShowRecords
 from queries import select_one
 
+BG = "#0099e6"
+
 class AddOrder:
     def __init__(self, screening_id):
         self.root = tk.Tk()
@@ -43,12 +45,12 @@ class AddOrder:
         print(screening_info[0], screening_info[1], screening_info[2])
 
 
-        titleLabel = tk.Label(top_frame, text=screening_info[0], bg="#0099e6", fg="white", width=20)
+        titleLabel = tk.Label(top_frame, text=screening_info[0], bg=BG, fg="white", width=20)
         titleLabel.grid(row=0, column=0)
-        dateLabel = tk.Label(top_frame, text=screening_info[1], bg="#0099e6", fg="white", width=20)
+        dateLabel = tk.Label(top_frame, text=screening_info[1], bg=BG, fg="white", width=20)
         dateLabel.grid(row=0, column=1)
         scr_time = "{:d}:{:02d}".format(screening_info[2].hour, screening_info[2].minute)
-        timeLabel = tk.Label(top_frame, text=scr_time, bg="#0099e6", fg="white", width=20)
+        timeLabel = tk.Label(top_frame, text=scr_time, bg=BG, fg="white", width=20)
         timeLabel.grid(row=0, column=2)
 
         ticketLabel = tk.Label(middle_frame, text="Tickets", fg='red', width=20)

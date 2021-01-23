@@ -3,6 +3,9 @@ import psycopg2
 from config import config
 from queries import select_all
 
+BG = "#66ccff"
+FG = "#00334d"
+
 class ShowOrders:
     def __init__(self):
         self.root = tk.Tk()
@@ -27,19 +30,19 @@ class ShowOrders:
         top_frame = tk.Frame(master_frame, relief=tk.RIDGE)
         top_frame.grid(row=0, column=0)
 
-        checkLabel = tk.Label(top_frame, text="Check", width=11, bg="#66ccff", fg="#00334d")
+        checkLabel = tk.Label(top_frame, text="Check", width=11, bg=BG, fg=FG)
         checkLabel.grid(row=0, column=0)
-        titleLabel = tk.Label(top_frame, text="Title", width=20, bg="#66ccff", fg="#00334d")
+        titleLabel = tk.Label(top_frame, text="Title", width=20, bg=BG, fg=FG)
         titleLabel.grid(row=0, column=1)
-        typeLabel = tk.Label(top_frame, text="Type of ticket", width=20, bg="#66ccff", fg="#00334d")
+        typeLabel = tk.Label(top_frame, text="Type of ticket", width=20, bg=BG, fg=FG)
         typeLabel.grid(row=0, column=2)
-        numberLabel = tk.Label(top_frame, text="Number of tickets", width=20, bg="#66ccff", fg="#00334d")
+        numberLabel = tk.Label(top_frame, text="Number of tickets", width=20, bg=BG, fg=FG)
         numberLabel.grid(row=0, column=3)
-        priceLabel = tk.Label(top_frame, text="Price", width=20, bg="#66ccff", fg="#00334d")
+        priceLabel = tk.Label(top_frame, text="Price", width=20, bg=BG, fg=FG)
         priceLabel.grid(row=0, column=4)
-        dateLabel = tk.Label(top_frame, text="Date", width=20, bg="#66ccff", fg="#00334d")
+        dateLabel = tk.Label(top_frame, text="Date", width=20, bg=BG, fg=FG)
         dateLabel.grid(row=0, column=5)
-        timeLabel = tk.Label(top_frame, text="Time", width=20, bg="#66ccff", fg="#00334d")
+        timeLabel = tk.Label(top_frame, text="Time", width=20, bg=BG, fg=FG)
         timeLabel.grid(row=0, column=6)
 
         customer_id = 4

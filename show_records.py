@@ -2,16 +2,18 @@ import tkinter as tk
 import psycopg2
 from config import config
 
+BG = "#66ccff"
+
 class ShowRecords:
     def __init__(self):
         self.root = tk.Tk()
         self.root.geometry("490x300+200+200")
         self.root.title('Records')
-        self.titleLabel = tk.Label(self.root, text="Title", width=20, bg="#66ccff")
+        self.titleLabel = tk.Label(self.root, text="Title", width=20, bg=BG)
         self.titleLabel.grid(row=0, column=0)
-        self.yearLabel = tk.Label(self.root, text="Year", width=20, bg="#66ccff")
+        self.yearLabel = tk.Label(self.root, text="Year", width=20, bg=BG)
         self.yearLabel.grid(row=0, column=1)
-        self.lengthLabel = tk.Label(self.root, text="Length", width=20, bg="#66ccff")
+        self.lengthLabel = tk.Label(self.root, text="Length", width=20, bg=BG)
         self.lengthLabel.grid(row=0, column=2)
         self.show_records()
         self.root.mainloop()

@@ -4,6 +4,7 @@ from config import config
 from queries import select_all
 
 BG = "#66b3ff"  # Light blue.
+FG = "white"
 ROWS, COLS = 10, 3  # Size of grid.
 ROWS_DISP = 8  # get_data of rows to display.
 COLS_DISP = 3  # get_data of columns to display.
@@ -37,13 +38,13 @@ class ShowMovies:
         top_frame = tk.Frame(master_frame, bg=BG, relief=tk.RIDGE)
         top_frame.grid(row=0, column=0)
 
-        label1a = tk.Label(top_frame, text="Title", bg=BG, fg="white", width=20)
+        label1a = tk.Label(top_frame, text="Title", bg=BG, fg=FG, width=20)
         label1a.grid(row=0, column=0, padx=3, pady=5)
 
-        label1b = tk.Label(top_frame, text="Year of production", bg=BG, fg="white", width=20)
+        label1b = tk.Label(top_frame, text="Year of production", bg=BG, fg=FG, width=20)
         label1b.grid(row=0, column=1, padx=3, pady=5)
 
-        label1c = tk.Label(top_frame, text="Length", bg=BG, fg="white", width=20)
+        label1c = tk.Label(top_frame, text="Length", bg=BG, fg=FG, width=20)
         label1c.grid(row=0, column=2, padx=3, pady=5)
 
         # Create a frame for the canvas and scrollbar(s).
