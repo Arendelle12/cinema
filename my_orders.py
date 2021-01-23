@@ -16,7 +16,11 @@ class ShowOrders:
         
     def movies(self):
         self.root.destroy()
-        movies.ShowMovies()
+        movies.ShowMovies(self.customer_id)
+
+    def tickets(self):
+        #pobranie id zamowienia
+        pass
 
     def delete(self):
         pass
@@ -71,12 +75,15 @@ class ShowOrders:
         moviesButton = tk.Button(bottom_frame, text="Show movies", bg="#ffff4d", activebackground="#ffa31a", command=self.movies)
         moviesButton.grid(row=0, column=0, padx=50)
 
+        ticketsButton = tk.Button(bottom_frame, text="Show tickets", bg="#ffff4d", activebackground="#ffa31a", command=self.tickets)
+        ticketsButton.grid(row=0, column=1, padx=50)
+
         deleteButton = tk.Button(bottom_frame, text="Delete order", bg="#dd3c3c", activebackground="#ff0000", command=self.delete)
-        deleteButton.grid(row=0, column=1, padx=50)
+        deleteButton.grid(row=0, column=2, padx=50)
 
         logoutButton = tk.Button(bottom_frame, text="Log out", bg="#9999ff", activebackground="#d24dff", command=self.log_out)
-        logoutButton.grid(row=0, column=2, padx=50)
+        logoutButton.grid(row=0, column=3, padx=50)
 
-# if __name__ == '__main__':
-#     app = ShowOrders()
+if __name__ == '__main__':
+    app = ShowOrders(4)
 
