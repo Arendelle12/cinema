@@ -52,6 +52,38 @@ def create_sequences():
         MINVALUE 1
         MAXVALUE 99
         OWNED BY halls.hall_number
+        """,
+        """
+        CREATE SEQUENCE hall_one
+        AS SMALLINT
+        INCREMENT BY 1
+        MINVALUE 1
+        MAXVALUE 30
+        OWNED BY halls.number_of_free_seats
+        """,
+        """
+        CREATE SEQUENCE hall_two
+        AS SMALLINT
+        INCREMENT BY 1
+        MINVALUE 1
+        MAXVALUE 50
+        OWNED BY halls.number_of_free_seats
+        """,
+        """
+        CREATE SEQUENCE hall_three
+        AS SMALLINT
+        INCREMENT BY 1
+        MINVALUE 1
+        MAXVALUE 40
+        OWNED BY halls.number_of_free_seats
+        """,
+        """
+        CREATE SEQUENCE hall_four
+        AS SMALLINT
+        INCREMENT BY 1
+        MINVALUE 1
+        MAXVALUE 35
+        OWNED BY halls.number_of_free_seats
         """)
     conn = None
     try:
