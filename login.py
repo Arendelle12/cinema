@@ -99,10 +99,14 @@ class InputWindow:
         error_frame = tk.Frame(master_frame, relief=tk.RIDGE)
         error_frame.grid(row=3, column=0, pady=10)
 
-        info_label = tk.Label(top_frame, text = """To add user: write personal data and click ADD USER button\n
-        To update email or phone: write users first name and last name and click UPDATE USER button\n
-        To log in: write users first name and last name and click LOG IN button""")
-        info_label.grid(row=0, column=0, padx=10, pady = 10)
+        add_info = tk.Label(top_frame, text = "To add user: write personal data and click ADD USER button", fg="#29a329")
+        add_info.grid(row=0, column=0, padx=10, pady = 10)
+
+        update_info = tk.Label(top_frame, text = "To update email or phone: write users first name and last name and click UPDATE USER button", fg="#ff9900")
+        update_info.grid(row=1, column=0, padx=10, pady = 10)
+
+        login_info = tk.Label(top_frame, text = "To log in: write users first name and last name and click LOG IN button", fg="#3399ff")
+        login_info.grid(row=2, column=0, padx=10, pady = 10)
 
         label1 = tk.Label(middle_frame, text = 'FIRST NAME *', fg="red")
         label1.grid(row=0, column=0, pady=5)
@@ -129,14 +133,16 @@ class InputWindow:
         self.entry4.grid(row=7, column=0, pady=5)
 
         
-
-        add_button = tk.Button(bottom_frame, text="Add user", command = self.add_user, bg = '#c299ff', activebackground='#b380ff', fg='#3d0099')
+        # napis na przycisku - fg=
+        # tlo bez myszki - bg=
+        # tlo z myszka - activebackground=
+        add_button = tk.Button(bottom_frame, text="Add user", command = self.add_user, bg = '#47d147', activebackground='#29a329')
         add_button.grid(row=0, column=0, padx=20, pady=10)
 
-        login_button = tk.Button(bottom_frame, text="Log In", command = self.log_in, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
+        login_button = tk.Button(bottom_frame, text="Log In", command = self.log_in, bg = '#80bfff', activebackground='#3399ff')
         login_button.grid(row=0, column=1, padx=20, pady=10)
 
-        update_button = tk.Button(bottom_frame, text="Update user", command = self.update_user, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
+        update_button = tk.Button(bottom_frame, text="Update user", command = self.update_user, bg = '#ffd11a', activebackground='#e6b800')
         update_button.grid(row=0, column=2, padx=20, pady=10)
 
         label5 = tk.Label(error_frame, textvariable = self.validationError)
