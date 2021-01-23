@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import psycopg2
 from config import config
-from my_orders import ShowOrders
+import my_orders 
 from queries import select_one
 
 BG = "#0099e6"
@@ -25,7 +25,7 @@ class AddOrder:
 
     def show(self):
         self.root.destroy()
-        ShowOrders()
+        my_orders.ShowOrders()
 
     def add(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)
@@ -41,7 +41,6 @@ class AddOrder:
         sql = """SELECT title, screening_date, screening_time FROM screenings WHERE screening_id = (%s);"""
         id_value = (self.screening_id, )
         screening_info = select_one(sql, id_value)
-        # print(screening_info[0], screening_info[1], screening_info[2])
 
 
         titleLabel = tk.Label(top_frame, text=screening_info[0], bg=BG, fg="white", width=20)

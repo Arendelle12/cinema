@@ -2,6 +2,8 @@ import tkinter as tk
 import psycopg2
 from config import config
 from queries import select_all
+import screenings 
+import my_orders
 
 BG = "#66b3ff"  # Light blue.
 FG = "white"
@@ -26,10 +28,12 @@ class ShowMovies:
         self.movies = select_all("""SELECT * FROM movies ORDER BY title, year_of_production;""")
 
     def show_screenings(self):
-        print("screen")
+        self.root.destroy()
+        screenings.ShowScreenings()
 
     def show_orders(self):
-        print("order")
+        self.root.destroy()
+        my_orders.ShowOrders()
 
     def show_records(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)
@@ -92,5 +96,5 @@ class ShowMovies:
 
 
 
-if __name__ == "__main__":
-    app = ShowMovies()    
+# if __name__ == "__main__":
+#     app = ShowMovies()    

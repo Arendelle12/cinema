@@ -2,8 +2,8 @@ import tkinter as tk
 import psycopg2
 from config import config
 from queries import select_all
-from movies import ShowMovies
-from login import InputWindow
+import movies
+import login 
 
 BG = "#66ccff"
 FG = "#00334d"
@@ -18,14 +18,14 @@ class ShowOrders:
         
     def movies(self):
         self.root.destroy()
-        ShowMovies()
+        movies.ShowMovies()
 
     def delete(self):
         pass
 
     def log_out(self):
         self.root.destroy()
-        InputWindow()
+        login.InputWindow()
 
     def show(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)
@@ -79,6 +79,6 @@ class ShowOrders:
         logoutButton = tk.Button(bottom_frame, text="Log out", bg="#9999ff", activebackground="#d24dff", command=self.log_out)
         logoutButton.grid(row=0, column=2, padx=50)
 
-if __name__ == '__main__':
-    app = ShowOrders()
+# if __name__ == '__main__':
+#     app = ShowOrders()
 

@@ -94,5 +94,5 @@ class ShowScreenings:
         okButton = tk.Button(bottom_frame, text="OK", command=self.getValue, bg="#4dff4d", activebackground="#00ff00")
         okButton.grid(row=0, column=0)
 
-if __name__ == '__main__':
-    root = ShowScreenings()
+# if __name__ == '__main__':
+#     root = ShowScreenings()
