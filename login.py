@@ -2,7 +2,8 @@ import tkinter as tk
 import psycopg2
 from config import config
 import re
-from queries import insert_data, update_data
+from queries import insert_data, update_data, select_one
+import movies
 
 class InputWindow:
     def __init__(self):
@@ -49,7 +50,8 @@ class InputWindow:
             insert_data(sql, values)
 
     def log_in(self):
-        print("Logowanie")
+        self.root.destroy()
+        movies.ShowMovies()
 
     def update_user(self):
         self.validationError.set('')
@@ -59,28 +61,35 @@ class InputWindow:
 
         first_name = self.entry1.get()
         last_name = self.entry2.get()
-        email = self.entry3.get()
-        phone_number = self.entry4.get()
 
-        if len(email) == 0:
-            email = None
-        if len(phone_number) == 0:
-            phone_number = None
+        query = """SELECT customer_id
+                FROM customers
+                WHERE first_name = %s AND last_name = %s;"""
+        user_values = (first_name, last_name)
+        user_data = select_one(query, user_values)
 
-        if not bool(name_pattern.match(first_name)):
-            self.validationError.set('First name must start with capital letter \n followed by lowercase letters')
-        elif not bool(name_pattern.match(last_name)):
-            self.validationError.set('Last name must start with capital letter \n followed by lowercase letters')
-        elif email is not None and not bool(email_pattern.match(email)):
-            self.validationError.set("E-mail doesn't match pattern")
-        elif phone_number is not None and not bool(phone_pattern.match(phone_number)):
-            self.validationError.set("Phone number must contain 9 digits")
+        if user_data is None:
+            self.validationError.set('User does not exist')
         else:
-            sql = """UPDATE customers
-            SET email = %s, phone_number = %s
-            WHERE first_name = %s AND last_name = %s;"""
-            values = (email, phone_number, first_name, last_name)
-            update_data(sql, values)
+            email = self.entry3.get()
+            phone_number = self.entry4.get()
+
+            if len(email) == 0:
+                email = None
+            if len(phone_number) == 0:
+                phone_number = None
+
+            if email is not None and not bool(email_pattern.match(email)):
+                self.validationError.set("E-mail doesn't match pattern")
+            elif phone_number is not None and not bool(phone_pattern.match(phone_number)):
+                self.validationError.set("Phone number must contain 9 digits")
+            else:
+                sql = """UPDATE customers
+                SET email = %s, phone_number = %s
+                WHERE first_name = %s AND last_name = %s;"""
+                values = (email, phone_number, first_name, last_name)
+                update_data(sql, values)
+                self.validationError.set("User updated")
 
     def window(self):
         label1 = tk.Label(self.root, text = 'FIRST NAME *', fg="red")
@@ -117,4 +126,5 @@ class InputWindow:
 
         self.root.mainloop()
 
-# win = InputWindow()
+if __name__ == "__main__":
+    win = InputWindow()
