@@ -43,13 +43,10 @@ class ShowScreenings:
         
         self.var = tk.IntVar()
         self.var.set(0)
-        # self.radiobutton_vars.append(var)
 
         for i in range(rows):
-            #var = tk.IntVar()
             radiobutton = tk.Radiobutton(master=self.middle_frame, variable=self.var, value=i)
             radiobutton.grid(row=i, column=0)
-            #self.radiobutton_vars.append(var)
 
         for j in range(cols):
             for i in range(rows):
@@ -62,8 +59,6 @@ class ShowScreenings:
                     label = tk.Label(master=self.middle_frame, text=scr_time, width=20)
 
                 label.grid(row=i, column=j+1, padx=5, pady=5, sticky="N")
-
-        
 
     def getValue(self):
         idx = self.var.get()
@@ -101,152 +96,3 @@ class ShowScreenings:
 
 if __name__ == '__main__':
     root = ShowScreenings()
-
-
-# import tkinter as tk 
-# from tkinter import ttk 
-  
-# # Creating tkinter window 
-# window = tk.Tk() 
-# window.geometry('500x350') 
-# # Label 
-# tk.Label(window, text = "Select the Month :").grid(column = 0, row = 15, padx = 10, pady = 25) 
-  
-# n = tk.StringVar() 
-# monthchoosen = ttk.Combobox(window, width = 27,  
-#                             textvariable = n) 
-  
-# # Adding combobox drop down list 
-# monthchoosen['values'] = (' January',  
-#                           ' February', 
-#                           ' March', 
-#                           ' April', 
-#                           ' May', 
-#                           ' June',  
-#                           ' July',  
-#                           ' August',  
-#                           ' September',  
-#                           ' October',  
-#                           ' November',  
-#                           ' December') 
-  
-# monthchoosen.grid(column = 1, row = 15) 
- 
-# monthchoosen.current() 
-# month = monthchoosen.get() 
-# print(month)
-# window.mainloop() 
-
-###################################################
-
-# import tkinter as tk
-# from tkinter import ttk
- 
-# root = tk.Tk() 
-# root.geometry('200x100')
-
-# labelTop = tk.Label(root,
-#                     text = "Choose your favourite month")
-# labelTop.grid(column=0, row=0)
-
-# comboExample = ttk.Combobox(root, 
-#                             values=[
-#                                     "January", 
-#                                     "February",
-#                                     "March",
-#                                     "April"])
-# print(dict(comboExample)) 
-# comboExample.grid(column=0, row=1)
-# comboExample.current(1)
-
-# print(comboExample.current(), comboExample.get())
-
-# root.mainloop()
-
-###################################################################
-
-# import tkinter as tk
-# from tkinter import ttk
-
-
-# class Combo:
-#     def __init__(self):
-#         self.root = tk.Tk() 
-#         self.root.geometry('200x100')
-#         self.show()
-#         self.root.mainloop()
-
-#     # def callbackFunc(self, event):
-#     #         print("New Element Selected: ", self.comboExample.get())
-
-#     # def get_name(self):
-#     #     self.comboExample.bind("<<ComboboxSelected>>", self.callbackFunc)
-
-#     def cmd(self):
-#         a = self.comboExample.get()
-#         print(a)
-
-#     def show(self):
-#         labelTop = tk.Label(self.root,
-#                             text = "Choose your favourite month")
-#         labelTop.grid(column=0, row=0)
-
-#         self.comboExample = ttk.Combobox(self.root, 
-#                                     values=[
-#                                             "January AAAA", 
-#                                             "February BBB",
-#                                             "March CCC",
-#                                             "April DDD"])
-
-
-#         self.comboExample.grid(column=0, row=1)
-#         self.comboExample.current(1)
-#         button1 = tk.Button(self.root, text="Get value", command=self.cmd, activebackground='Lime')
-#         button1.grid(row=2, column=0)
-#         #self.get_name()
-#         #print(self.comboExample.get())
-
-# if __name__ == "__main__":
-#     root = Combo()
-
-#############################################
-
-# from tkinter import *
-
-# class Checkbar(Frame):
-#    def __init__(self, parent=None, picks=[], side=LEFT, anchor=W):
-#       Frame.__init__(self, parent)
-#       self.vars = []
-#       for pick in picks:
-#          var = IntVar()
-#          chk = Checkbutton(self, text=pick, variable=var)
-#          chk.pack(side=side, anchor=anchor, expand=YES)
-#          self.vars.append(var)
-
-#    def state(self):
-#       return map((lambda var: var.get()), self.vars)
-
-
-# if __name__ == '__main__':
-#    root = Tk()
-#    lng = Checkbar(root, ['Python', 'Ruby', 'Perl', 'C++'])
-#    tgl = Checkbar(root, ['English','German'])
-#    lng.pack(side=TOP,  fill=X)
-#    tgl.pack(side=LEFT)
-#    lng.config(relief=GROOVE, bd=2)
-
-#    def allstates(): 
-#         print(type(lng))
-#         print(list(lng.state()), list(tgl.state()))
-#         a = list(lng.state())
-#         for i in a:
-#             print(type(i))
-#             if i == 1:
-                
-
-#    Button(root, text='Quit', command=root.quit).pack(side=RIGHT)
-#    Button(root, text='Peek', command=allstates).pack(side=RIGHT)
-
-   
-
-#    root.mainloop()

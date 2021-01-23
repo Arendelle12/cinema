@@ -93,5 +93,4 @@ class ShowMovies:
 
 
 if __name__ == "__main__":
-    app = ShowMovies()
-    
+    app = ShowMovies()    
