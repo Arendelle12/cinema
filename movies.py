@@ -12,9 +12,9 @@ ROWS_DISP = 8  # get_data of rows to display.
 COLS_DISP = 3  # get_data of columns to display.
 
 class ShowMovies:
-    def __init__(self):
+    def __init__(self, customer_id):
+        self.customer_id = customer_id
         self.root = tk.Tk()
-
         self.root.title("Movies")
         self.root.configure(background="Gray") 
         self.get_data()
@@ -29,11 +29,11 @@ class ShowMovies:
 
     def show_screenings(self):
         self.root.destroy()
-        screenings.ShowScreenings()
+        screenings.ShowScreenings(self.customer_id)
 
     def show_orders(self):
         self.root.destroy()
-        my_orders.ShowOrders()
+        my_orders.ShowOrders(self.customer_id)
 
     def show_records(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)

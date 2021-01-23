@@ -11,9 +11,7 @@ class AddOrder:
     def __init__(self, screening_id):
         self.root = tk.Tk()
         self.root.title('Add order')
-
         self.screening_id = screening_id
-
         self.add()
         self.root.mainloop()
 
@@ -88,5 +86,5 @@ class AddOrder:
         ordersButton = tk.Button(bottom_frame, text="Show orders", bg="#33ff33", activebackground="#00e600", command=self.show)
         ordersButton.grid(row=0, column=1, padx=20)
 
-if __name__ == "__main__":
-    app = AddOrder(2)  
+# if __name__ == "__main__":
+#     app = AddOrder(2)  

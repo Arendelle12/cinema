@@ -18,8 +18,6 @@ class InputWindow:
 
     def add_user(self):
         self.validationError.set('')
-        
-
         first_name = self.entry1.get()
         last_name = self.entry2.get()
         email = self.entry3.get()
@@ -45,8 +43,20 @@ class InputWindow:
             insert_data(sql, values)
 
     def log_in(self):
-        self.root.destroy()
-        movies.ShowMovies()
+        self.validationError.set('')
+        first_name = self.entry1.get()
+        last_name = self.entry2.get()
+        sql_find = """SELECT customer_id FROM customers WHERE first_name = %s AND last_name = %s;"""
+        customer_data = select_one(sql_find, (first_name, last_name))
+        
+        
+        if customer_data is None:
+            self.validationError.set('User does not exist')
+        else:
+            self.root.destroy()
+            movies.ShowMovies(customer_data[0])
+        # print(type(customer_data[0]))
+        
 
     def update_user(self):
         self.validationError.set('')
@@ -57,10 +67,10 @@ class InputWindow:
         query = """SELECT customer_id
                 FROM customers
                 WHERE first_name = %s AND last_name = %s;"""
-        user_values = (first_name, last_name)
-        user_data = select_one(query, user_values)
+        
+        customer_data = select_one(query, (first_name, last_name))
 
-        if user_data is None:
+        if customer_data is None:
             self.validationError.set('User does not exist')
         else:
             email = self.entry3.get()

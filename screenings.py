@@ -3,9 +3,11 @@ from tkinter import ttk
 import psycopg2
 from config import config
 from queries import select_all
+import add_order
 
 class ShowScreenings:
-    def __init__(self):
+    def __init__(self, customer_id):
+        self.customer_id = customer_id
         self.root = tk.Tk() 
         self.root.geometry('600x300')
         self.root.title("Screenings") 
@@ -62,7 +64,9 @@ class ShowScreenings:
 
     def getValue(self):
         idx = self.var.get()
-        print(idx, ": ", self.read_id[idx])
+        # print(idx, ": ", self.read_id[idx])
+        self.root.destroy()
+        add_order.AddOrder(self.read_id[idx])
 
 
     def show(self):
@@ -95,4 +99,4 @@ class ShowScreenings:
         okButton.grid(row=0, column=0)
 
 # if __name__ == '__main__':
-#     root = ShowScreenings()
+#     root = ShowScreenings(6)
