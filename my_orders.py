@@ -2,6 +2,8 @@ import tkinter as tk
 import psycopg2
 from config import config
 from queries import select_all
+from movies import ShowMovies
+from login import InputWindow
 
 BG = "#66ccff"
 FG = "#00334d"
@@ -15,13 +17,15 @@ class ShowOrders:
         self.root.mainloop()
         
     def movies(self):
-        pass
+        self.root.destroy()
+        ShowMovies()
 
     def delete(self):
         pass
 
     def log_out(self):
-        pass
+        self.root.destroy()
+        InputWindow()
 
     def show(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)
