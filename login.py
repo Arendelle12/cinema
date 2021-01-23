@@ -8,22 +8,17 @@ import movies
 class InputWindow:
     def __init__(self):
         self.root = tk.Tk()
-        
-        self.box = tk.Canvas(self.root, width = 400, height = 400)
-        self.box.pack()
-        self.root.title('Sign in')
-        self.entry1 = tk.Entry(self.root)
-        self.entry2 = tk.Entry(self.root)
-        self.entry3 = tk.Entry(self.root)
-        self.entry4 = tk.Entry(self.root)
+        self.root.title('Welcome')
+        self.name_pattern = re.compile("^[A-Z][a-z]+$")
+        self.email_pattern = re.compile("^[A-Za-z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+        self.phone_pattern = re.compile("[0-9]{9}")
         self.validationError = tk.StringVar()
         self.window()
+        self.root.mainloop()
 
     def add_user(self):
         self.validationError.set('')
-        name_pattern = re.compile("^[A-Z][a-z]+$")
-        email_pattern = re.compile("^[A-Za-z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
-        phone_pattern = re.compile("[0-9]{9}")
+        
 
         first_name = self.entry1.get()
         last_name = self.entry2.get()
@@ -35,13 +30,13 @@ class InputWindow:
         if len(phone_number) == 0:
             phone_number = None
 
-        if not bool(name_pattern.match(first_name)):
-            self.validationError.set('First name must start with capital letter \n followed by lowercase letters')
-        elif not bool(name_pattern.match(last_name)):
-            self.validationError.set('Last name must start with capital letter \n followed by lowercase letters')
-        elif email is not None and not bool(email_pattern.match(email)):
+        if not bool(self.name_pattern.match(first_name)):
+            self.validationError.set('First name must start with capital letter followed by lowercase letters')
+        elif not bool(self.name_pattern.match(last_name)):
+            self.validationError.set('Last name must start with capital letter followed by lowercase letters')
+        elif email is not None and not bool(self.email_pattern.match(email)):
             self.validationError.set("E-mail doesn't match pattern")
-        elif phone_number is not None and not bool(phone_pattern.match(phone_number)):
+        elif phone_number is not None and not bool(self.phone_pattern.match(phone_number)):
             self.validationError.set("Phone number must contain 9 digits")
         else:
             sql = """INSERT INTO customers
@@ -55,9 +50,6 @@ class InputWindow:
 
     def update_user(self):
         self.validationError.set('')
-        name_pattern = re.compile("^[A-Z][a-z]+$")
-        email_pattern = re.compile("^[A-Za-z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
-        phone_pattern = re.compile("[0-9]{9}")
 
         first_name = self.entry1.get()
         last_name = self.entry2.get()
@@ -79,9 +71,9 @@ class InputWindow:
             if len(phone_number) == 0:
                 phone_number = None
 
-            if email is not None and not bool(email_pattern.match(email)):
+            if email is not None and not bool(self.email_pattern.match(email)):
                 self.validationError.set("E-mail doesn't match pattern")
-            elif phone_number is not None and not bool(phone_pattern.match(phone_number)):
+            elif phone_number is not None and not bool(self.phone_pattern.match(phone_number)):
                 self.validationError.set("Phone number must contain 9 digits")
             else:
                 sql = """UPDATE customers
@@ -92,39 +84,65 @@ class InputWindow:
                 self.validationError.set("User updated")
 
     def window(self):
-        label1 = tk.Label(self.root, text = 'FIRST NAME *', fg="red")
-        self.box.create_window(200, 40, window = label1)
+        master_frame = tk.Frame(self.root, relief=tk.RIDGE)
+        master_frame.grid(row=0, column=0)
+
+        top_frame = tk.Frame(master_frame, relief=tk.RIDGE)
+        top_frame.grid(row=0, column=0)
+
+        middle_frame = tk.Frame(master_frame, relief=tk.RIDGE)
+        middle_frame.grid(row=1, column=0)
+
+        bottom_frame = tk.Frame(master_frame, relief=tk.RIDGE)
+        bottom_frame.grid(row=2, column=0, pady=10)
+
+        error_frame = tk.Frame(master_frame, relief=tk.RIDGE)
+        error_frame.grid(row=3, column=0, pady=10)
+
+        info_label = tk.Label(top_frame, text = """To add user: write personal data and click ADD USER button\n
+        To update email or phone: write users first name and last name and click UPDATE USER button\n
+        To log in: write users first name and last name and click LOG IN button""")
+        info_label.grid(row=0, column=0, padx=10, pady = 10)
+
+        label1 = tk.Label(middle_frame, text = 'FIRST NAME *', fg="red")
+        label1.grid(row=0, column=0, pady=5)
         
-        self.box.create_window(200, 70, window = self.entry1)
+        self.entry1 = tk.Entry(middle_frame)
+        self.entry1.grid(row=1, column=0, pady=5)
 
-        label2 = tk.Label(self.root, text = 'LAST NAME *', fg="red")
-        self.box.create_window(200, 110, window = label2)
+        label2 = tk.Label(middle_frame, text = 'LAST NAME *', fg="red")
+        label2.grid(row=2, column=0, pady=5)
 
-        self.box.create_window(200, 140, window = self.entry2)
+        self.entry2 = tk.Entry(middle_frame)
+        self.entry2.grid(row=3, column=0, pady=5)
 
-        label3 = tk.Label(self.root, text = 'EMAIL')
-        self.box.create_window(200, 180, window = label3)
+        label3 = tk.Label(middle_frame, text = 'EMAIL')
+        label3.grid(row=4, column=0, pady=5)
 
-        self.box.create_window(200, 210, window = self.entry3)
+        self.entry3 = tk.Entry(middle_frame)
+        self.entry3.grid(row=5, column=0, pady=5)
 
-        label4 = tk.Label(self.root, text = 'PHONE NUMBER')
-        self.box.create_window(200, 250, window = label4)
+        label4 = tk.Label(middle_frame, text = 'PHONE NUMBER')
+        label4.grid(row=6, column=0, pady=5)
 
-        self.box.create_window(200, 280, window = self.entry4)
+        self.entry4 = tk.Entry(middle_frame)
+        self.entry4.grid(row=7, column=0, pady=5)
 
-        button1 = tk.Button(text="Add user", command = self.add_user, bg = '#c299ff', activebackground='#b380ff', fg='#3d0099')
-        self.box.create_window(100, 320, window = button1)
+        
 
-        button2 = tk.Button(text="Log In", command = self.log_in, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
-        self.box.create_window(200, 320, window = button2)
+        add_button = tk.Button(bottom_frame, text="Add user", command = self.add_user, bg = '#c299ff', activebackground='#b380ff', fg='#3d0099')
+        add_button.grid(row=0, column=0, padx=20, pady=10)
 
-        button3 = tk.Button(text="Update user", command = self.update_user, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
-        self.box.create_window(300, 320, window = button3)
+        login_button = tk.Button(bottom_frame, text="Log In", command = self.log_in, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
+        login_button.grid(row=0, column=1, padx=20, pady=10)
 
-        label5 = tk.Label(self.root, textvariable = self.validationError)
-        self.box.create_window(200, 360, window = label5)
+        update_button = tk.Button(bottom_frame, text="Update user", command = self.update_user, bg = '#c299ff', activebackground='#b380ff', fg = '#3d0099')
+        update_button.grid(row=0, column=2, padx=20, pady=10)
 
-        self.root.mainloop()
+        label5 = tk.Label(error_frame, textvariable = self.validationError)
+        label5.grid(row=0, column=0)
+
+        
 
 if __name__ == "__main__":
     win = InputWindow()
