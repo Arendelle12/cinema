@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import psycopg2
-from config import config
 import my_orders 
 from queries import select_one, insert_data
 

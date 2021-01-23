@@ -1,7 +1,5 @@
 import  tkinter as tk
 from tkinter import ttk
-import psycopg2
-from config import config
 from queries import select_all
 import add_order
 
@@ -98,5 +96,5 @@ class ShowScreenings:
         okButton = tk.Button(bottom_frame, text="OK", command=self.getValue, bg="#4dff4d", activebackground="#00ff00")
         okButton.grid(row=0, column=0)
 
-# if __name__ == '__main__':
-#     root = ShowScreenings(6)
+if __name__ == '__main__':
+    root = ShowScreenings(6)

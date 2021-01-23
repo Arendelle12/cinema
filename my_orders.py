@@ -1,6 +1,4 @@
 import tkinter as tk
-import psycopg2
-from config import config
 from queries import select_all
 import movies
 import login 
