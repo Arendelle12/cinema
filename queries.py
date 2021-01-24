@@ -93,7 +93,7 @@ def update_data(sql, values):
         if conn is not None:
             conn.close()
 
-def deletete_data(sql, values):
+def delete_data(sql, values):
     conn = None
     try:
         # read database configuration
@@ -102,10 +102,11 @@ def deletete_data(sql, values):
         conn = psycopg2.connect(**params)
         # create a new cursor
         cur = conn.cursor()
-        # execute the INSERT statement
+        # execute the DELETE statement
         cur.execute(sql, values)
         # commit the changes to the database
         conn.commit()
+        print("data deleted")
         # close communication with the database
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:

@@ -253,12 +253,17 @@ if __name__ == '__main__':
     # insert_ticket(30, None, 16, 4, None, 6)
     # insert_ticket(30, None, 17, 4, None, 6)
 
-    # insert_ticket(15, None, 1, 4, None, 6, 'student')
+    # insert_ticket(15, None, 5, 4, None, 6, 'student')
     # insert_ticket(15, None, 2, 4, None, 6, 'student')
     # insert_ticket(15, None, 3, 4, None, 6, 'student')
 
     # insert_order(5)
 
-    insert_ticket(30, None, 1, 5, None, 8)
-    insert_ticket(15, None, 2, 5, None, 8, 'student')
-    insert_ticket(15, None, 3, 5, None, 8, 'student')
+    # insert_ticket(30, None, 1, 9, None, 8)
+    # insert_ticket(15, None, 2, 9, None, 8, 'student')
+    # insert_ticket(15, None, 3, 9, None, 8, 'student')
+
+    insert_ticket(15, None, 3, 6, None, 6, 'student')
+    insert_ticket(30, None, 3, 7, None, 15)
+    insert_ticket(15, None, 3, 8, None, 24, 'student')
+    insert_ticket(30, None, 3, 8, None, 24)
