@@ -3,7 +3,6 @@ from config import config
 
 
 def create_procedure():
-    """ create function in the PostgreSQL database"""
     commands = (
         """
         CREATE OR REPLACE PROCEDURE update_user(

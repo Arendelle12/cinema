@@ -11,7 +11,6 @@ class ShowTickets:
         self.customer_id = customer_id
         self.order_id = order_id
         self.tickets_id = []
-        
         self.show()
         
 
@@ -19,13 +18,11 @@ class ShowTickets:
         self.root.destroy()
         my_orders.ShowOrders(self.customer_id)
         
-
     def delete(self):
         sql = """DELETE FROM tickets WHERE ticket_id = %s;"""
         delete_id = []
         for v in self.checkbuttons_variables:
             delete_id.append(v.get())
-        print(delete_id)
 
         for ticket_id in delete_id:
             if ticket_id != 0:
@@ -34,7 +31,6 @@ class ShowTickets:
 
         self.root.destroy()
         self.show()
-
 
     def show(self):
         self.root = tk.Tk()
@@ -59,8 +55,6 @@ class ShowTickets:
         discountLabel = tk.Label(top_frame, text="Percent discount", width=20, bg=BG, fg=FG)
         discountLabel.grid(row=0, column=5)
 
-
-
         values = (self.order_id, )
         sql = """SELECT s.title, type_of_ticket, price, number_of_seat, percent_discount
                 FROM tickets AS t INNER JOIN screenings AS s ON t.screening_id = s.screening_id
@@ -75,7 +69,6 @@ class ShowTickets:
         tick_id = select_all(id_sql, values)
         for indx, tid in enumerate(tick_id):
             self.tickets_id.append(tid[0])
-        #print(self.tickets_id)
 
         self.checkbuttons_variables = []
 
