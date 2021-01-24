@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import my_orders 
-from queries import select_one, insert_data
+from queries import select_one, insert_data, insert_data_returning, calculate_price, update_data
 
 BG = "#0099e6"
 
@@ -16,35 +16,76 @@ class AddOrder:
         self.root.mainloop()
 
     def add_user_order(self):
-        rN = int(self.regularNumber.get())
-        sN = int(self.studentNumber.get())
-        fN = int(self.familyNumber.get())
-        print(type(fN), ": ", fN)
-        if fN != 0 and fN < 4:
-            self.addOrderError.set('Family only for groups of 4 or bigger')
-        # Sprawdzenie, czy jest w sali tyle miejsc
-        # jesli nie, komunikat 
-        #self.addOrderError.set('Not enough seats. Please choose different screening!')
-        # jesli tak, dodaj najpierw nowe zamowienie
-        else: 
-            order_sql = """INSERT INTO orders VALUES(nextval('order_id_seq'),%s);"""
-            insert_data(order_sql, (self.customer_id, ))
-            # potem do zamowienia dodaj bilety
-            if rN != 0:
+        try:
+            rN = int(self.regularNumber.get())
+            sN = int(self.studentNumber.get())
+            fN = int(self.familyNumber.get())
+            # print(type(fN), ": ", fN)
+        except:
+            self.addOrderError.set('Must be a number')
+        else:
+            rN = int(self.regularNumber.get())
+            sN = int(self.studentNumber.get())
+            fN = int(self.familyNumber.get())
+            if fN != 0 and fN < 4:
+                self.addOrderError.set('Family only for groups of 4 or bigger')
+            elif rN > 10 or sN > 10 or fN > 10:
+                self.addOrderError.set('Please select max 10 tickets')
+            elif rN == 0 and sN == 0 and fN == 0:
+                self.addOrderError.set('You have not selected any tickets')
+            # Sprawdzenie, czy jest w sali tyle miejsc
+            # jesli nie, komunikat 
+            #self.addOrderError.set('Not enough seats. Please choose different screening!')
+            # jesli tak, dodaj najpierw nowe zamowienie
+            else: 
+                self.addOrderError.set('')
+                order_sql = """INSERT INTO orders VALUES(nextval('order_id_seq'),%s) RETURNING order_id;"""
+                order_id = insert_data_returning(order_sql, (self.customer_id, ))
+                print(order_id)
+                # potem do zamowienia dodaj bilety
+                if rN != 0:
+                    regular_sql = """INSERT INTO tickets(ticket_id, price, number_of_seat, order_id, screening_id) 
+                                    VALUES(nextval('ticket_id_seq'),%s,%s,%s,%s);"""
+                    regular_values = (30, 9, order_id, self.screening_id)
 
-                # ticket_id NUMERIC(3) PRIMARY KEY,
-                # type_of_ticket VARCHAR(10) NOT NULL DEFAULT 'regular',
-                # price NUMERIC(6, 2) NOT NULL CONSTRAINT chk_price CHECK(price > 0),
-                # percent_discount NUMERIC(3) CONSTRAINT chk_percent_discount CHECK(percent_discount BETWEEN 0 AND 100),
-                # number_of_seat NUMERIC(2) NOT NULL CONSTRAINT chk_seat CHECK(number_of_seat > 0),
-                # order_id NUMERIC(3) NOT NULL,
-                # discount_id NUMERIC(3),
-                # screening_id NUMERIC(3) NOT NULL,
+                    for i in range(rN):
+                        insert_data(regular_sql, regular_values)
+                        print(i, " regular ticket inserted")
 
-                regular_sql = """INSERT INTO tickets VALUES(nextval('ticket_id_seq'),%s,%s,%s,%s,%s,%s,%s);"""
-                for i in range(rN):
-                    insert
-            self.addOrderError.set('Tickets added to order')
+                if sN != 0:
+                    student_discount = select_one("""SELECT discount FROM discounts WHERE discount_id=%s;""", (1,))
+                    student_price = calculate_price(30, student_discount[0])
+
+                    student_sql = """INSERT INTO tickets 
+                                    VALUES(nextval('ticket_id_seq'),%s,%s,%s,%s,%s,%s,%s);"""
+                    student_values = ('student', student_price, student_discount[0], 11, order_id, 1, self.screening_id)
+
+                    for i in range(sN):
+                        insert_data(student_sql, student_values)
+                        print(i, " student ticket inserted")
+
+                if fN != 0:
+                    family_discount = select_one("""SELECT discount FROM discounts WHERE discount_id=%s;""", (2,))
+                    family_price = calculate_price(30, family_discount[0])
+
+                    family_sql = """INSERT INTO tickets
+                                    VALUES(nextval('ticket_id_seq'),%s,%s,%s,%s,%s,%s,%s);"""
+                    family_values = ('family', family_price, family_discount[0], 13, order_id, 2, self.screening_id)
+
+                    for i in range(fN):
+                        insert_data(family_sql, family_values)
+                        print(i, " family ticket inserted")
+
+                    # ticket_id NUMERIC(3) PRIMARY KEY,
+                    # type_of_ticket VARCHAR(10) NOT NULL DEFAULT 'regular',
+                    # price NUMERIC(6, 2) NOT NULL CONSTRAINT chk_price CHECK(price > 0),
+                    # percent_discount NUMERIC(3) CONSTRAINT chk_percent_discount CHECK(percent_discount BETWEEN 0 AND 100),
+                    # number_of_seat NUMERIC(2) NOT NULL CONSTRAINT chk_seat CHECK(number_of_seat > 0),
+                    # order_id NUMERIC(3) NOT NULL,
+                    # discount_id NUMERIC(3),
+                    # screening_id NUMERIC(3) NOT NULL,
+
+                self.addOrderError.set('Tickets added to order')
 
     def show(self):
         self.root.destroy()
@@ -117,4 +158,4 @@ class AddOrder:
         errorLabel.grid(row=0, column=0)
 
 if __name__ == "__main__":
-    app = AddOrder(6, 2)  
+    app = AddOrder(6, 23)  

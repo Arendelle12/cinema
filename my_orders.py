@@ -21,22 +21,23 @@ class ShowOrders:
 
     def tickets(self):
         #pobranie id zamowienia
-        # order_id = []
+        order_id = None
         for v in self.checkbuttons_variables:
             if v.get() != 0:
                 order_id = v.get()
                 break
             #order_id.append(v.get())
-        print(order_id)
-        self.root.destroy()
-        tickets.ShowTickets(self.customer_id, order_id)
+        # print(order_id)
+        if order_id is not None:
+            self.root.destroy()
+            tickets.ShowTickets(self.customer_id, order_id)
 
     def delete(self):
         sql = """DELETE FROM orders WHERE order_id = %s;"""
         delete_id = []
         for v in self.checkbuttons_variables:
             delete_id.append(v.get())
-        print(delete_id)
+        # print(delete_id)
 
         for order_id in delete_id:
             if order_id != 0:
@@ -109,7 +110,7 @@ class ShowOrders:
         moviesButton = tk.Button(bottom_frame, text="Show movies", bg="#ffff4d", activebackground="#ffa31a", command=self.movies)
         moviesButton.grid(row=0, column=0, padx=30, pady=15)
 
-        ticketsButton = tk.Button(bottom_frame, text="Show tickets", bg="#ffff4d", activebackground="#ffa31a", command=self.tickets)
+        ticketsButton = tk.Button(bottom_frame, text="Show tickets", bg="#33cc33", activebackground="#29a329", command=self.tickets)
         ticketsButton.grid(row=0, column=1, padx=30, pady=15)
 
         deleteButton = tk.Button(bottom_frame, text="Delete order", bg="#dd3c3c", activebackground="#ff0000", command=self.delete)

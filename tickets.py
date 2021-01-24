@@ -100,5 +100,5 @@ class ShowTickets:
 
         self.root.mainloop()
 
-if __name__ == '__main__':
-    app = ShowTickets(4, 4)
+# if __name__ == '__main__':
+#     app = ShowTickets(4, 4)
