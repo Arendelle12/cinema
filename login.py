@@ -2,7 +2,7 @@ import tkinter as tk
 import psycopg2
 from config import config
 import re
-from queries import insert_data, update_data, select_one
+from queries import insert_data, update_customer, select_one
 import movies
 
 class InputWindow:
@@ -86,11 +86,7 @@ class InputWindow:
             elif phone_number is not None and not bool(self.phone_pattern.match(phone_number)):
                 self.validationError.set("Phone number must contain 9 digits")
             else:
-                sql = """UPDATE customers
-                SET email = %s, phone_number = %s
-                WHERE first_name = %s AND last_name = %s;"""
-                values = (email, phone_number, first_name, last_name)
-                update_data(sql, values)
+                update_customer(first_name, last_name, email, phone_number)
                 self.validationError.set("User updated")
 
     def window(self):
