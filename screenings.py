@@ -31,8 +31,6 @@ class ShowScreenings:
             self.read_titles.append(r[1])
             self.read_dates.append(r[2])
             self.read_times.append(r[3])
-
-            
          
         rows = select_all("""SELECT COUNT(*) FROM screenings WHERE title = (%s);""", title)[0][0]
         cols = 3
@@ -40,7 +38,6 @@ class ShowScreenings:
         for widget in self.middle_frame.winfo_children():
             widget.destroy()
 
-        
         self.var = tk.IntVar()
         self.var.set(0)
 
@@ -62,7 +59,6 @@ class ShowScreenings:
 
     def getValue(self):
         idx = self.var.get()
-        # print(idx, ": ", self.read_id[idx])
         self.root.destroy()
         add_order.AddOrder(self.customer_id, self.read_id[idx])
 
@@ -96,5 +92,5 @@ class ShowScreenings:
         okButton = tk.Button(bottom_frame, text="OK", command=self.getValue, bg="#4dff4d", activebackground="#00ff00")
         okButton.grid(row=0, column=0)
 
-if __name__ == '__main__':
-    root = ShowScreenings(6)
+# if __name__ == '__main__':
+#     root = ShowScreenings(6)

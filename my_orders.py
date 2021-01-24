@@ -14,20 +14,17 @@ class ShowOrders:
         self.orders_id = []
         self.show()
         
-        
     def movies(self):
         self.root.destroy()
         movies.ShowMovies(self.customer_id)
 
     def tickets(self):
-        #pobranie id zamowienia
         order_id = None
         for v in self.checkbuttons_variables:
             if v.get() != 0:
                 order_id = v.get()
                 break
-            #order_id.append(v.get())
-        # print(order_id)
+
         if order_id is not None:
             self.root.destroy()
             tickets.ShowTickets(self.customer_id, order_id)
@@ -37,7 +34,6 @@ class ShowOrders:
         delete_id = []
         for v in self.checkbuttons_variables:
             delete_id.append(v.get())
-        # print(delete_id)
 
         for order_id in delete_id:
             if order_id != 0:
@@ -46,7 +42,6 @@ class ShowOrders:
 
         self.root.destroy()
         self.show()
-
 
     def log_out(self):
         self.root.destroy()
@@ -121,6 +116,6 @@ class ShowOrders:
 
         self.root.mainloop()
 
-if __name__ == '__main__':
-    app = ShowOrders(6)
+# if __name__ == '__main__':
+#     app = ShowOrders(6)
 

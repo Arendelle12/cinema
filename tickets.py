@@ -12,7 +12,6 @@ class ShowTickets:
         self.order_id = order_id
         self.tickets_id = []
         self.show()
-        
 
     def orders(self):
         self.root.destroy()

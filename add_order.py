@@ -20,7 +20,6 @@ class AddOrder:
             rN = int(self.regularNumber.get())
             sN = int(self.studentNumber.get())
             fN = int(self.familyNumber.get())
-            # print(type(fN), ": ", fN)
         except:
             self.addOrderError.set('Must be a number')
         else:
@@ -41,8 +40,7 @@ class AddOrder:
                 self.addOrderError.set('')
                 order_sql = """INSERT INTO orders VALUES(nextval('order_id_seq'),%s) RETURNING order_id;"""
                 order_id = insert_data_returning(order_sql, (self.customer_id, ))
-                print(order_id)
-                # potem do zamowienia dodaj bilety
+
                 if rN != 0:
                     regular_sql = """INSERT INTO tickets(ticket_id, price, number_of_seat, order_id, screening_id) 
                                     VALUES(nextval('ticket_id_seq'),%s,%s,%s,%s);"""
@@ -50,7 +48,6 @@ class AddOrder:
 
                     for i in range(rN):
                         insert_data(regular_sql, regular_values)
-                        print(i, " regular ticket inserted")
 
                 if sN != 0:
                     student_discount = select_one("""SELECT discount FROM discounts WHERE discount_id=%s;""", (1,))
@@ -62,7 +59,6 @@ class AddOrder:
 
                     for i in range(sN):
                         insert_data(student_sql, student_values)
-                        print(i, " student ticket inserted")
 
                 if fN != 0:
                     family_discount = select_one("""SELECT discount FROM discounts WHERE discount_id=%s;""", (2,))
@@ -74,7 +70,6 @@ class AddOrder:
 
                     for i in range(fN):
                         insert_data(family_sql, family_values)
-                        print(i, " family ticket inserted")
 
                     # ticket_id NUMERIC(3) PRIMARY KEY,
                     # type_of_ticket VARCHAR(10) NOT NULL DEFAULT 'regular',
@@ -107,7 +102,6 @@ class AddOrder:
         sql = """SELECT title, screening_date, screening_time FROM screenings WHERE screening_id = (%s);"""
         id_value = (self.screening_id, )
         screening_info = select_one(sql, id_value)
-
 
         titleLabel = tk.Label(top_frame, text=screening_info[0], bg=BG, fg="white", width=20)
         titleLabel.grid(row=0, column=0)
@@ -157,5 +151,5 @@ class AddOrder:
         errorLabel = tk.Label(error_frame, textvariable = self.addOrderError, fg="red")
         errorLabel.grid(row=0, column=0)
 
-if __name__ == "__main__":
-    app = AddOrder(6, 23)  
+# if __name__ == "__main__":
+#     app = AddOrder(6, 23)  

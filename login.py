@@ -49,14 +49,11 @@ class InputWindow:
         sql_find = """SELECT customer_id FROM customers WHERE first_name = %s AND last_name = %s;"""
         customer_data = select_one(sql_find, (first_name, last_name))
         
-        
         if customer_data is None:
             self.validationError.set('User does not exist')
         else:
             self.root.destroy()
             movies.ShowMovies(customer_data[0])
-        # print(type(customer_data[0]))
-        
 
     def update_user(self):
         self.validationError.set('')
