@@ -54,6 +54,7 @@ def insert_data(sql, values):
 
 def insert_data_returning(sql, values):
     conn = None
+    index = None
     try:
         params = config()
         conn = psycopg2.connect(**params)
