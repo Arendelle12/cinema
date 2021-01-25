@@ -4,6 +4,7 @@ from config import config
 import re
 from queries import insert_data, update_customer, select_one
 import movies
+import find_user
 
 class InputWindow:
     def __init__(self):
@@ -41,6 +42,7 @@ class InputWindow:
                     VALUES(nextval('customer_id_seq'),%s,%s,%s,%s);"""
             values = (first_name, last_name, email, phone_number)
             insert_data(sql, values)
+            self.validationError.set('New user added')
 
     def log_in(self):
         self.validationError.set('')
@@ -86,6 +88,20 @@ class InputWindow:
                 update_customer(first_name, last_name, email, phone_number)
                 self.validationError.set("User updated")
 
+    def find_users(self):
+        self.validationError.set('')
+
+        first_name = self.entry1.get()
+        last_name = self.entry2.get()
+
+        if len(first_name) == 0:
+            first_name = None
+        if len(last_name) == 0:
+            last_name = None
+
+        self.root.destroy()
+        find_user.FindWindow(first_name, last_name)
+
     def window(self):
         master_frame = tk.Frame(self.root, relief=tk.RIDGE)
         master_frame.grid(row=0, column=0)
@@ -110,6 +126,9 @@ class InputWindow:
 
         login_info = tk.Label(top_frame, text = "To log in: write users first name and last name and click LOG IN button", fg="#3399ff")
         login_info.grid(row=2, column=0, padx=10, pady = 10)
+
+        find_info = tk.Label(top_frame, text = "To find users: write first letters of users first name and/or first letters of last name and click FIND USERS button", fg="#ff3399")
+        find_info.grid(row=3, column=0, padx=10, pady = 10)
 
         label1 = tk.Label(middle_frame, text = 'FIRST NAME *', fg="red")
         label1.grid(row=0, column=0, pady=5)
@@ -143,6 +162,9 @@ class InputWindow:
 
         update_button = tk.Button(bottom_frame, text="Update user", command = self.update_user, bg = '#ffd11a', activebackground='#e6b800')
         update_button.grid(row=0, column=2, padx=20, pady=10)
+
+        find_button = tk.Button(bottom_frame, text="Find users", command = self.find_users, bg = '#ff80bf', activebackground='#ff3399')
+        find_button.grid(row=0, column=3, padx=20, pady=10)
 
         label5 = tk.Label(error_frame, textvariable = self.validationError)
         label5.grid(row=0, column=0)
