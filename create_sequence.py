@@ -54,50 +54,21 @@ def create_sequences():
         OWNED BY halls.hall_number
         """,
         """
-        CREATE SEQUENCE hall_one
+        CREATE SEQUENCE seat_number_seq
         AS SMALLINT
         INCREMENT BY 1
         MINVALUE 1
-        MAXVALUE 30
-        OWNED BY halls.number_of_free_seats
-        """,
-        """
-        CREATE SEQUENCE hall_two
-        AS SMALLINT
-        INCREMENT BY 1
-        MINVALUE 1
-        MAXVALUE 50
-        OWNED BY halls.number_of_free_seats
-        """,
-        """
-        CREATE SEQUENCE hall_three
-        AS SMALLINT
-        INCREMENT BY 1
-        MINVALUE 1
-        MAXVALUE 40
-        OWNED BY halls.number_of_free_seats
-        """,
-        """
-        CREATE SEQUENCE hall_four
-        AS SMALLINT
-        INCREMENT BY 1
-        MINVALUE 1
-        MAXVALUE 35
-        OWNED BY halls.number_of_free_seats
+        MAXVALUE 99
+        OWNED BY tickets.number_of_seat
         """)
     conn = None
     try:
-        # read the connection parameters
         params = config()
-        # connect to the PostgreSQL server
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-        # create sequence one by one
         for command in commands:
             cur.execute(command)
-        # close communication with the PostgreSQL database server
         cur.close()
-        # commit the changes
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
