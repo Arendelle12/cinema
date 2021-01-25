@@ -138,5 +138,5 @@ class AddOrder:
         errorLabel = tk.Label(error_frame, textvariable = self.addOrderError, fg="red")
         errorLabel.grid(row=0, column=0)
 
-if __name__ == "__main__":
-    app = AddOrder(6, 19)  
+# if __name__ == "__main__":
+#     app = AddOrder(6, 19)  

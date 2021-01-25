@@ -3,11 +3,11 @@ from queries import select_all
 import screenings 
 import my_orders
 
-BG = "#66b3ff"  # Light blue.
+BG = "#66b3ff"  
 FG = "white"
-ROWS, COLS = 10, 3  # Size of grid.
-ROWS_DISP = 8  # get_data of rows to display.
-COLS_DISP = 3  # get_data of columns to display.
+ROWS, COLS = 10, 3  
+ROWS_DISP = 8  
+COLS_DISP = 3  
 
 class ShowMovies:
     def __init__(self, customer_id):

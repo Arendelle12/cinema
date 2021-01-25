@@ -133,16 +133,5 @@ def update_customer(first_name, last_name, email, phone_number):
         if conn is not None:
             conn.close()
 
-if __name__ == '__main__':
-    #sql = """SELECT * FROM movies ORDER BY movie_length;"""
-    #value = ('Frozen', )
-    #movies = select_all(sql)
-    #movie = select_one(sql)
-    #print(movies)
-    # res = calculate_price(30, 50)
-    # print(res)
-    # student_discount = select_one("""SELECT discount FROM discounts WHERE discount_id=%s;""", (1,))
-    # print(student_discount[0])
-    # student_price = calculate_price(30, student_discount[0])
-    # print(student_price)
-    update_customer('Mike', 'Wazowski', None, None)
+# if __name__ == '__main__':
+#     update_customer('Mike', 'Wazowski', None, None)
